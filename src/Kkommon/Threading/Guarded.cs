@@ -25,7 +25,8 @@ namespace Kkommon.Threading
         public int CurrentCount => _semaphoreSlim.CurrentCount;
 
         /// <summary>
-        ///     Initializes a new guard, specifying the initial value and maximum count of concurrent accesses
+        ///     Initializes a new <see cref="Guarded{T}"/>, specifying the initial value and maximum count of concurrent
+        ///     accesses.
         /// </summary>
         /// <param name="value">The underlying value.</param>
         /// <param name="maxCount">The maximum allowed concurrent accesses.</param>
@@ -45,8 +46,8 @@ namespace Kkommon.Threading
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe.</param>
         /// <returns>
-        ///     A task that will complete when the guard has been entered with the disposable <see cref="Access"/>
-        ///     as result.
+        ///     A task that will complete when the <see cref="Guarded{T}"/> has been entered with the disposable
+        ///     <see cref="Access"/> as result.
         /// </returns>
         /// <exception cref="OperationCanceledException">The cancellationToken was canceled.</exception>
         /// <exception cref="ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -72,7 +73,7 @@ namespace Kkommon.Threading
             return Access.CreateAccess(this);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Dispose()
         {
             _semaphoreSlim.Dispose();
@@ -112,7 +113,7 @@ namespace Kkommon.Threading
             /// <param name="guard">The <see cref="Guarded{T}"/> to get access from.</param>
             /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe.</param>
             /// <returns>
-            ///     A task that will complete when the guard has been entered.
+            ///     A task that will complete when the <see cref="Guarded{T}"/> has been entered.
             /// </returns>
             [EditorBrowsable(EditorBrowsableState.Never)]
             public static async Task<Access> CreateAccessAsync(
@@ -141,7 +142,7 @@ namespace Kkommon.Threading
             }
 
             /// <summary>
-            ///     Releases the underlying guard once
+            ///     Releases the underlying <see cref="Guarded{T}"/> once.
             /// </summary>
             public void Dispose() => _guard._semaphoreSlim.Release();
         }

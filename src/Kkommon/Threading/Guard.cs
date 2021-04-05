@@ -15,12 +15,13 @@ namespace Kkommon.Threading
         private bool _isDisposed;
 
         /// <summary>
-        ///     Gets the number of remaining threads that can enter the guard.
+        ///     Gets the number of remaining threads that can enter the <see cref="Guard"/>.
         /// </summary>
         public int CurrentCount => _semaphoreSlim.CurrentCount;
 
         /// <summary>
-        ///     Initializes a new guard, specifying the initial count and maximum count of concurrent accesses.
+        ///     Initializes a new <see cref="Guard"/>, specifying the initial count and maximum count of concurrent
+        ///     accesses.
         /// </summary>
         /// <param name="maxCount">The maximum allowed concurrent accesses</param>
         /// <exception cref="ArgumentOutOfRangeException">The maximum count less than or equal to 0.</exception>
@@ -34,12 +35,13 @@ namespace Kkommon.Threading
         }
 
         /// <summary>
-        ///     Asynchronously waits to enter the guard, while observing a <see cref="CancellationToken"/>.
+        ///     Asynchronously waits to enter the <see cref="Guard"/>, while observing a
+        ///     <see cref="CancellationToken"/>.
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe.</param>
         /// <returns>
-        ///     A task that will complete when the guard has been entered with the disposable <see cref="Access"/>
-        ///     as result.
+        ///     A task that will complete when the <see cref="Guard"/> has been entered with the disposable
+        ///     <see cref="Access"/> as result.
         /// </returns>
         /// <exception cref="OperationCanceledException">The cancellationToken was canceled.</exception>
         /// <exception cref="ObjectDisposedException">The current instance has already been disposed.</exception>
@@ -51,7 +53,7 @@ namespace Kkommon.Threading
         }
 
         /// <summary>
-        ///     Blocks the current thread until it can enter the guard.
+        ///     Blocks the current thread until it can enter the <see cref="Guard"/>.
         /// </summary>
         /// <returns>
         ///     The disposable <see cref="Access"/>.
@@ -71,7 +73,7 @@ namespace Kkommon.Threading
                 throw new ObjectDisposedException(nameof(Guard), "The instance is already disposed.");
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Dispose()
         {
             _semaphoreSlim.Dispose();
@@ -94,10 +96,10 @@ namespace Kkommon.Threading
             /// <summary>
             ///     Asynchronously waits to enter the <see cref="Guard"/>.
             /// </summary>
-            /// <param name="guard">The guard to get access from.</param>
+            /// <param name="guard">The <see cref="Guard"/> to get access from.</param>
             /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe.</param>
             /// <returns>
-            ///     A task that will complete when the guard has been entered.
+            ///     A task that will complete when the <see cref="Guard"/> has been entered.
             /// </returns>
             [EditorBrowsable(EditorBrowsableState.Never)]
             public static async Task<Access> CreateAccessAsync(
@@ -113,7 +115,7 @@ namespace Kkommon.Threading
             /// <summary>
             ///     Blocks the current thread until it can enter the <see cref="Guard"/>.
             /// </summary>
-            /// <param name="guard">The guard to get access from</param>
+            /// <param name="guard">The <see cref="Guard"/> to get access from</param>
             /// <returns>
             ///     A new disposable <see cref="Access"/>.
             /// </returns>
@@ -126,7 +128,7 @@ namespace Kkommon.Threading
             }
 
             /// <summary>
-            ///     Releases the underlying guard once
+            ///     Releases the underlying <see cref="Guard"/> once.
             /// </summary>
             public void Dispose() => _guard._semaphoreSlim.Release();
         }
