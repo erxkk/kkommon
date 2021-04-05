@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Kkommon.Unions
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A union of type that holds a value of type <typeparamref name="T1"/>.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Case1 : Union<T1, T2, T3, T4, T5>
         {
             /// <summary>
@@ -28,6 +31,8 @@ namespace Kkommon.Unions
             /// <inheritdoc/>
             public override string ToString() => $"Union`5 {{ {typeof(T1).Name}: {Value} }}";
 
+            private string DebuggerDisplay => $"Case1 {{ Value = {Value} }}";
+
             public static implicit operator T1(Case1 @this) => @this.Value;
             public static implicit operator Case1(T1 value) => new(value);
         }
@@ -35,6 +40,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A union of type that holds a value of type <typeparamref name="T2"/>.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Case2 : Union<T1, T2, T3, T4, T5>
         {
             /// <summary>
@@ -49,6 +55,8 @@ namespace Kkommon.Unions
             /// <inheritdoc/>
             public override string ToString() => $"Union`5 {{ {typeof(T2).Name}: {Value} }}";
 
+            private string DebuggerDisplay => $"Case2 {{ Value = {Value} }}";
+
             public static implicit operator T2(Case2 @this) => @this.Value;
             public static implicit operator Case2(T2 value) => new(value);
         }
@@ -56,6 +64,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A union of type that holds a value of type <typeparamref name="T3"/>.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Case3 : Union<T1, T2, T3, T4, T5>
         {
             /// <summary>
@@ -70,6 +79,8 @@ namespace Kkommon.Unions
             /// <inheritdoc/>
             public override string ToString() => $"Union`5 {{ {typeof(T3).Name}: {Value} }}";
 
+            private string DebuggerDisplay => $"Case3 {{ Value = {Value} }}";
+
             public static implicit operator T3(Case3 @this) => @this.Value;
             public static implicit operator Case3(T3 value) => new(value);
         }
@@ -77,6 +88,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A union of type that holds a value of type <typeparamref name="T4"/>.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Case4 : Union<T1, T2, T3, T4, T5>
         {
             /// <summary>
@@ -91,6 +103,8 @@ namespace Kkommon.Unions
             /// <inheritdoc/>
             public override string ToString() => $"Union`5 {{ {typeof(T4).Name}: {Value} }}";
 
+            private string DebuggerDisplay => $"Case4 {{ Value = {Value} }}";
+
             public static implicit operator T4(Case4 @this) => @this.Value;
             public static implicit operator Case4(T4 value) => new(value);
         }
@@ -98,6 +112,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A union of type that holds a value of type <typeparamref name="T5"/>.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Case5 : Union<T1, T2, T3, T4, T5>
         {
             /// <summary>
@@ -111,6 +126,8 @@ namespace Kkommon.Unions
 
             /// <inheritdoc/>
             public override string ToString() => $"Union`5 {{ {typeof(T5).Name}: {Value} }}";
+
+            private string DebuggerDisplay => $"Case5 {{ Value = {Value} }}";
 
             public static implicit operator T5(Case5 @this) => @this.Value;
             public static implicit operator Case5(T5 value) => new(value);

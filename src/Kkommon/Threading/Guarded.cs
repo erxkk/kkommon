@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Kkommon.Threading
     ///     Setting the value of a <see cref="Guarded{T}"/> implicitly will default to 1 initial count and
     ///     <see cref="int.MaxValue"/> max count.
     /// </remarks>
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class Guarded<T> : IDisposable
     {
         private readonly SemaphoreSlim _semaphoreSlim;
@@ -146,5 +148,15 @@ namespace Kkommon.Threading
             /// </summary>
             public void Dispose() => _guard._semaphoreSlim.Release();
         }
+
+        /// <summary>
+        ///     Returns a string representation of this <see cref="Guarded{T}"/> and it's value.
+        /// </summary>
+        /// <returns>
+        ///     A string representing the current object.
+        /// </returns>
+        public override string ToString() => $"Guarded<{typeof(T).Name}> {{ Value: {_value?.ToString() ?? "null"} }}";
+        private string DebuggerDisplay
+            => $"Guarded<{typeof(T).Name}> {{ CurrentCount = {CurrentCount}, Value = {_value} }}";
     }
 }

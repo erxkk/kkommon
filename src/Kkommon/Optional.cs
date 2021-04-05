@@ -1,9 +1,12 @@
+using System.Diagnostics;
+
 #nullable enable
 namespace Kkommon
 {
     /// <summary>
     ///     A type that may contain a value of type <typeparamref name="T"/>.
     /// </summary>
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<T>
     {
         /// <summary>
@@ -27,7 +30,8 @@ namespace Kkommon
             Value    = value;
         }
 
-        public static implicit operator Optional<T>(T? value) => value is not null ? new Optional<T>(value) : new Optional<T>();
+        public static implicit operator Optional<T>(T? value)
+            => value is not null ? new Optional<T>(value) : new Optional<T>();
 
         /// <summary>
         ///     Returns a string representation of this optional and it's state and value.
@@ -35,6 +39,9 @@ namespace Kkommon
         /// <returns>
         ///     A string representing the current object.
         /// </returns>
-        public override string ToString() => $"Optional<{typeof(T).Name}> {{ {(HasValue ? $"Value: {Value}" : "Empty")} }}";
+        public override string ToString()
+            => $"Optional<{typeof(T).Name}> {{ {(HasValue ? $"Value: {Value}" : "Empty")} }}";
+
+        private string DebuggerDisplay => $"Optional<{typeof(T).Name}> {{ HasValue = {HasValue}, Value = {Value} }}";
     }
 }

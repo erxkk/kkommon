@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Kkommon.Threading
     ///     A simple wrapper around a <see cref="SemaphoreSlim"/> that uses <see cref="Access"/> to wait for and to
     ///     release the semaphore via <see cref="IDisposable"/>.
     /// </summary>
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public struct Guard : IDisposable
     {
         private readonly SemaphoreSlim _semaphoreSlim;
@@ -132,5 +134,6 @@ namespace Kkommon.Threading
             /// </summary>
             public void Dispose() => _guard._semaphoreSlim.Release();
         }
+        private string DebuggerDisplay => $"Guard {{ CurrentCount = {CurrentCount} }}";
     }
 }

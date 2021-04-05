@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Kkommon.Unions
 {
     /// <summary>
@@ -15,6 +17,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A <see cref="Result{TSuccess, TError}"/> that holds a success value.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Success : Result<TSuccess, TError>
         {
             /// <summary>
@@ -28,6 +31,7 @@ namespace Kkommon.Unions
 
             /// <inheritdoc/>
             public override string ToString() => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Success: {Value} }}";
+            private string DebuggerDisplay => $"Success {{ Value = {Value} }}";
 
             public static implicit operator TSuccess(Success @this) => @this.Value;
             public static implicit operator Success(TSuccess value) => new(value);
@@ -36,6 +40,7 @@ namespace Kkommon.Unions
         /// <summary>
         ///     A <see cref="Result{TSuccess, TError}"/> that holds an error value.
         /// </summary>
+        [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
         public sealed class Error : Result<TSuccess, TError>
         {
             /// <summary>
@@ -49,6 +54,7 @@ namespace Kkommon.Unions
 
             /// <inheritdoc/>
             public override string ToString() => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Error: {Value} }}";
+            private string DebuggerDisplay => $"Error {{ Value = {Value} }}";
 
             public static implicit operator TError(Error @this) => @this.Value;
             public static implicit operator Error(TError value) => new(value);
