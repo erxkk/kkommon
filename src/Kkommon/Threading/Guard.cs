@@ -29,10 +29,10 @@ namespace Kkommon.Threading
         /// <exception cref="ArgumentOutOfRangeException">The maximum count less than or equal to 0.</exception>
         public Guard(int maxCount = int.MaxValue)
         {
-            if (maxCount > 0)
+            if (maxCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum count must be greater than 0.");
 
-            _semaphoreSlim = new SemaphoreSlim(0, maxCount);
+            _semaphoreSlim = new SemaphoreSlim(maxCount, maxCount);
             _isDisposed    = false;
         }
 
@@ -103,6 +103,7 @@ namespace Kkommon.Threading
             /// <returns>
             ///     A task that will complete when the <see cref="Guard"/> has been entered.
             /// </returns>
+            /// <exception cref="OperationCanceledException">The cancellationToken was canceled.</exception>
             [EditorBrowsable(EditorBrowsableState.Never)]
             public static async Task<Access> CreateAccessAsync(
                 Guard guard,
@@ -134,6 +135,7 @@ namespace Kkommon.Threading
             /// </summary>
             public void Dispose() => _guard._semaphoreSlim.Release();
         }
+
         private string DebuggerDisplay => $"Guard {{ CurrentCount = {CurrentCount} }}";
     }
 }
