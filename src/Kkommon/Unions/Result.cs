@@ -1,17 +1,14 @@
 using System.Diagnostics;
 
-namespace Kkommon.Unions
+namespace Kkommon
 {
     /// <summary>
-    ///     A special type of <see cref="Union{TSuccess,TError}"/> that represents the return type of a function that
+    ///     A special type of <see cref="Unions.Union{TSuccess,TError}"/> that represents the return type of a function that
     ///     might fail execution gracefully, returning  <typeparamref name="TSuccess"/> on success and
     ///     <typeparamref name="TError"/> on failure.
     /// </summary>
     public abstract class Result<TSuccess, TError>
     {
-        /// <summary>
-        ///     Creates a new <see cref="Result{TSuccess, TError}"/> with the given value.
-        /// </summary>
         private Result() { }
 
         /// <summary>
@@ -30,7 +27,9 @@ namespace Kkommon.Unions
             public Success(TSuccess value) => Value = value;
 
             /// <inheritdoc/>
-            public override string ToString() => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Success: {Value} }}";
+            public override string ToString()
+                => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Success: {Value} }}";
+
             private string DebuggerDisplay => $"Success {{ Value = {Value} }}";
 
             public static implicit operator TSuccess(Success @this) => @this.Value;
@@ -53,7 +52,9 @@ namespace Kkommon.Unions
             public Error(TError value) => Value = value;
 
             /// <inheritdoc/>
-            public override string ToString() => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Error: {Value} }}";
+            public override string ToString()
+                => $"Result<{typeof(TSuccess).Name}, {typeof(TError).Name}> {{ Error: {Value} }}";
+
             private string DebuggerDisplay => $"Error {{ Value = {Value} }}";
 
             public static implicit operator TError(Error @this) => @this.Value;

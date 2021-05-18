@@ -2,6 +2,19 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Update="Extensions\ArithmeticExtensions.Primitives.cs">
+        <DependentUpon>ArithmeticExtensions.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Ratio.Operators.cs">
+        <DependentUpon>Ratio.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Unions\Try.Exception.cs">
+        <DependentUpon>Try.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
 
 </Project>
