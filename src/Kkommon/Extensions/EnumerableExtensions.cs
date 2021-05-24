@@ -75,12 +75,31 @@ namespace Kkommon.Extensions.Linq
         ///     <see langword="true"/> if the <see cref="source"/> <see cref="IEnumerable{T}"/> contained at least
         ///     <paramref name="count"/> elements; otherwise <see langowrd="false"/>.
         /// </returns>
-        public static bool AtLeast<TSource>(this IEnumerable<TSource> source, int count)
+        public static bool Minimum<TSource>(this IEnumerable<TSource> source, int count)
         {
             Preconditions.NotNull(source, nameof(source));
             Preconditions.InRange(count, 1, int.MaxValue, nameof(count));
 
             return source.Skip(count - 1).Any();
+        }
+
+        /// <summary>
+        ///     Checks whether or not an <see cref="IEnumerable{T}"/> contains at most <paramref name="count"/>
+        ///     elements.
+        /// </summary>
+        /// <param name="source">The source collection.</param>
+        /// <param name="count">The number of elements to check for.</param>
+        /// <typeparam name="TSource"></typeparam>
+        /// <returns>
+        ///     <see langword="true"/> if the <see cref="source"/> <see cref="IEnumerable{T}"/> contained at most
+        ///     <paramref name="count"/> elements; otherwise <see langowrd="false"/>.
+        /// </returns>
+        public static bool Maximum<TSource>(this IEnumerable<TSource> source, int count)
+        {
+            Preconditions.NotNull(source, nameof(source));
+            Preconditions.InRange(count, 1, int.MaxValue, nameof(count));
+
+            return !source.Skip(count).Any();
         }
     }
 }
