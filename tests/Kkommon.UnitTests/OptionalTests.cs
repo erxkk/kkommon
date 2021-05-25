@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Kkommon.UnitTests
 {
-    public class OptionalTests
+    public sealed class OptionalTests
     {
         [Fact]
         public void Throws_If_Not_Set_Explicitly()

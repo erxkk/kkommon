@@ -2,7 +2,7 @@ using Xunit;
 
 namespace Kkommon.UnitTests
 {
-    public class MathematicsTests
+    public sealed class MathematicsTests
     {
         [Theory]
         [InlineData(20, 6, 2), InlineData(4, 20, 4), InlineData(2, 7, 1)]

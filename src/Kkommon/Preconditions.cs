@@ -39,7 +39,7 @@ namespace Kkommon
         /// </exception>
         public static void InRange<T>(IComparable<T> argument, T lowerBound, T upperBound, string parameterName)
         {
-            if (argument.IsInRange(lowerBound, upperBound))
+            if (!argument.IsInRange(lowerBound, upperBound))
                 Throw.ArgumentOutOfRange(argument, lowerBound, upperBound, parameterName);
         }
 
@@ -59,7 +59,7 @@ namespace Kkommon
         /// </exception>
         public static void InRange(int argument, int lowerBound, int upperBound, string parameterName)
         {
-            if (argument.IsInRange(lowerBound, upperBound))
+            if (!argument.IsInRange(lowerBound, upperBound))
                 Throw.ArgumentOutOfRange(argument, lowerBound, upperBound, parameterName);
         }
     }

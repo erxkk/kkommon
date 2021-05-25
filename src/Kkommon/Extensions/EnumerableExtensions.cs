@@ -80,7 +80,7 @@ namespace Kkommon.Extensions.Linq
             Preconditions.NotNull(source, nameof(source));
             Preconditions.InRange(count, 1, int.MaxValue, nameof(count));
 
-            return source.Skip(count - 1).Any();
+            return source is ICollection<TSource> collection ? collection.Count >= count : source.Skip(count - 1).Any();
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Kkommon.Extensions.Linq
             Preconditions.NotNull(source, nameof(source));
             Preconditions.InRange(count, 1, int.MaxValue, nameof(count));
 
-            return !source.Skip(count).Any();
+            return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
         }
     }
 }

@@ -12,9 +12,6 @@
       <Compile Update="Ratio.Operators.cs">
         <DependentUpon>Ratio.cs</DependentUpon>
       </Compile>
-      <Compile Update="Unions\Try.Exception.cs">
-        <DependentUpon>Try.cs</DependentUpon>
-      </Compile>
     </ItemGroup>
 
 </Project>

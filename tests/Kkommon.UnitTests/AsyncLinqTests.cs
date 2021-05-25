@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Kkommon.UnitTests
 {
-    public class AsyncLinqTests
+    public sealed class AsyncLinqTest
     {
         [Fact]
         public async Task Filters_Uneven_Asynchronously()
