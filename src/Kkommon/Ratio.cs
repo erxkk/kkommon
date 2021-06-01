@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 using Kkommon.Extensions;
 
@@ -9,6 +8,9 @@ namespace Kkommon
     /// <summary>
     ///     A 64-bit struct that encapsulates a ratio of two 32-bit integers.
     /// </summary>
+    /// <remarks>
+    ///     All arithmetic operations can be see as operations on (Numerator / Denominator), returning a new ratio.
+    /// </remarks>
     public readonly partial struct Ratio : IEquatable<Ratio>, IComparable<Ratio>
     {
         /// <summary>
@@ -109,7 +111,7 @@ namespace Kkommon
         public bool Equals(Ratio other) => Numerator == other.Numerator && Denominator == other.Denominator;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is Ratio ratio && Equals(ratio);
+        public override bool Equals(object? obj) => obj is Ratio ratio && Equals(ratio);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCode.Combine(Numerator, Denominator);

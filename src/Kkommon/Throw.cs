@@ -18,7 +18,7 @@ namespace Kkommon
             => throw new InvalidOperationException(reason, innerException);
 
         /// <summary>
-        ///     Throws a <see cref="ArgumentNullException"/> with a given <paramref name="reason"/>.
+        ///     Throws a <see cref="ArgumentNullException"/> with a given <paramref name="parameterName"/>.
         /// </summary>
         /// <param name="parameterName">The name of the parameter that was <see langword="null"/>.</param>
         /// <exception cref="ArgumentNullException">Always.</exception>

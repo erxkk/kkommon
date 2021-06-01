@@ -12,35 +12,6 @@ namespace Kkommon.Extensions.Linq
     public static class EnumerableExtensions
     {
         /// <summary>
-        ///     Filters elements of the source by distinctness of the return value of a selector.
-        /// </summary>
-        /// <param name="source">The source collection.</param>
-        /// <param name="selector">The selector that selects what to filter by.</param>
-        /// <param name="equalityComparer">An optional comparer for the selected values.</param>
-        /// <typeparam name="TSource">The type of the elements in the source <see cref="IEnumerable{T}"/>.</typeparam>
-        /// <typeparam name="TSelector">The return type of the <paramref name="selector"/>.</typeparam>
-        /// <returns>
-        ///     An <see cref="IEnumerable{T}"/> containing the elements where the selector was distinct.
-        /// </returns>
-        public static IEnumerable<TSource> DistinctSelect<TSource, TSelector>(
-            this IEnumerable<TSource> source,
-            Func<TSource, TSelector> selector,
-            IEqualityComparer<TSelector>? equalityComparer = null
-        )
-        {
-            Preconditions.NotNull(source, nameof(source));
-            Preconditions.NotNull(selector, nameof(selector));
-
-            HashSet<TSelector> set = new(equalityComparer);
-
-            foreach (TSource item in source)
-            {
-                if (set.Add(selector(item)))
-                    yield return item;
-            }
-        }
-
-        /// <summary>
         ///     Enumerates the <see cref="IEnumerable{T}"/> while exposing the index of each element.
         /// </summary>
         /// <param name="source">The source collection.</param>
@@ -49,7 +20,7 @@ namespace Kkommon.Extensions.Linq
         ///     An <see cref="IEnumerable{T}"/> containing the elements and their respective indices.
         /// </returns>
         /// <exception cref="OverflowException">The count operation resulted in an overflow.</exception>
-        public static IEnumerable<(int Index, TSource Item)> Enumerate<TSource>(this IEnumerable<TSource> source)
+        public static IEnumerable<EnumerationItem<TSource>> Enumerate<TSource>(this IEnumerable<TSource> source)
         {
             Preconditions.NotNull(source, nameof(source));
 
@@ -59,7 +30,7 @@ namespace Kkommon.Extensions.Linq
             {
                 checked
                 {
-                    yield return (++index, item);
+                    yield return new EnumerationItem<TSource>(++index, item);
                 }
             }
         }
@@ -75,6 +46,7 @@ namespace Kkommon.Extensions.Linq
         ///     <see langword="true"/> if the <see cref="source"/> <see cref="IEnumerable{T}"/> contained at least
         ///     <paramref name="count"/> elements; otherwise <see langowrd="false"/>.
         /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">The count is less than 1.</exception>
         public static bool Minimum<TSource>(this IEnumerable<TSource> source, int count)
         {
             Preconditions.NotNull(source, nameof(source));
@@ -94,6 +66,7 @@ namespace Kkommon.Extensions.Linq
         ///     <see langword="true"/> if the <see cref="source"/> <see cref="IEnumerable{T}"/> contained at most
         ///     <paramref name="count"/> elements; otherwise <see langowrd="false"/>.
         /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">The count is less than 1.</exception>
         public static bool Maximum<TSource>(this IEnumerable<TSource> source, int count)
         {
             Preconditions.NotNull(source, nameof(source));

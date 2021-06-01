@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 namespace Kkommon.Threading
 {
     /// <summary>
-    ///     A <see cref="Guard"/> that encapsulates the object it guards, using <see cref="Access"/> to wait for
-    ///     and to release an underlying <see cref="SemaphoreSlim"/> via <see cref="IDisposable"/>.
+    ///     A class that encapsulates an object, returning access to it via an underlying <see cref="SemaphoreSlim"/>.
     /// </summary>
     /// <remarks>
     ///     Setting the value of a <see cref="Guarded{T}"/> implicitly will default to 1 initial count and
     ///     <see cref="int.MaxValue"/> max count.
     /// </remarks>
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class Guarded<T> : IDisposable
+    [Obsolete("Marked obsolete until better support for different read write operations")]
+    public sealed class Guarded<T> : IDisposable
     {
         private readonly SemaphoreSlim _semaphoreSlim;
         private bool _isDisposed;
-        private T _value;
+        private T? _value;
 
         /// <summary>
         ///     Gets the number of remaining threads that can enter the guard.
@@ -33,12 +33,12 @@ namespace Kkommon.Threading
         /// <param name="value">The underlying value.</param>
         /// <param name="maxCount">The maximum allowed concurrent accesses.</param>
         /// <exception cref="ArgumentOutOfRangeException">The maximum count less than or equal to 0.</exception>
-        public Guarded(T value = default, int maxCount = int.MaxValue)
+        public Guarded(T? value = default, int maxCount = int.MaxValue)
         {
             if (maxCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(maxCount), "The maximum count must be greater than 0.");
 
-            _value         = value;
+            _value = value;
             _semaphoreSlim = new SemaphoreSlim(maxCount, maxCount);
         }
 
@@ -49,15 +49,15 @@ namespace Kkommon.Threading
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe.</param>
         /// <returns>
         ///     A task that will complete when the <see cref="Guarded{T}"/> has been entered with the disposable
-        ///     <see cref="Access"/> as result.
+        ///     <see cref="Handle"/> as result.
         /// </returns>
         /// <exception cref="OperationCanceledException">The cancellationToken was canceled.</exception>
         /// <exception cref="ObjectDisposedException">The current instance has already been disposed.</exception>
-        public Task<Access> GetAccessAsync(CancellationToken cancellationToken = default)
+        public Task<Handle> EnterAsync(CancellationToken cancellationToken = default)
         {
             ThrowIfDisposed();
 
-            return Access.CreateAccessAsync(this, cancellationToken);
+            return Handle.CreateAsync(this, cancellationToken);
         }
 
         /// <summary>
@@ -65,14 +65,14 @@ namespace Kkommon.Threading
         ///     <see cref="CancellationToken"/>.
         /// </summary>
         /// <returns>
-        ///     The disposable <see cref="Access"/>.
+        ///     The disposable <see cref="Handle"/>.
         /// </returns>
         /// <exception cref="ObjectDisposedException">The current instance has already been disposed.</exception>
-        public Access GetAccess()
+        public Handle Enter()
         {
             ThrowIfDisposed();
 
-            return Access.CreateAccess(this);
+            return Handle.Create(this);
         }
 
         /// <inheritdoc/>
@@ -98,16 +98,16 @@ namespace Kkommon.Threading
         ///     will throw a <see cref="NullReferenceException"/>.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public readonly struct Access : IDisposable
+        public readonly struct Handle : IDisposable
         {
             private readonly Guarded<T> _guard;
 
             /// <summary>
             ///     The underlying value of the <see cref="Guarded{T}"/>
             /// </summary>
-            public T Value { get => _guard._value; set => _guard._value = value; }
+            public T? Value { get => _guard._value; set => _guard._value = value; }
 
-            private Access(Guarded<T> guard) => _guard = guard;
+            private Handle(Guarded<T> guard) => _guard = guard;
 
             /// <summary>
             ///     Asynchronously waits to enter the <see cref="Guard"/>.
@@ -119,14 +119,14 @@ namespace Kkommon.Threading
             /// </returns>
             /// <exception cref="OperationCanceledException">The cancellationToken was canceled.</exception>
             [EditorBrowsable(EditorBrowsableState.Never)]
-            public static async Task<Access> CreateAccessAsync(
+            public static async Task<Handle> CreateAsync(
                 Guarded<T> guard,
                 CancellationToken cancellationToken
             )
             {
                 await guard._semaphoreSlim.WaitAsync(cancellationToken);
 
-                return new Access(guard);
+                return new Handle(guard);
             }
 
             /// <summary>
@@ -134,14 +134,14 @@ namespace Kkommon.Threading
             /// </summary>
             /// <param name="guard">The <see cref="Guarded{T}"/> to get access from.</param>
             /// <returns>
-            ///     A new disposable <see cref="Access"/>.
+            ///     A new disposable <see cref="Handle"/>.
             /// </returns>
             [EditorBrowsable(EditorBrowsableState.Never)]
-            public static Access CreateAccess(Guarded<T> guard)
+            public static Handle Create(Guarded<T> guard)
             {
                 guard._semaphoreSlim.Wait();
 
-                return new Access(guard);
+                return new Handle(guard);
             }
 
             /// <summary>
@@ -157,6 +157,7 @@ namespace Kkommon.Threading
         ///     A string representing the current object.
         /// </returns>
         public override string ToString() => $"Guarded<{typeof(T).Name}> {{ Value: {_value?.ToString() ?? "null"} }}";
+
         private string DebuggerDisplay
             => $"Guarded<{typeof(T).Name}> {{ CurrentCount = {CurrentCount}, Value = {_value} }}";
     }

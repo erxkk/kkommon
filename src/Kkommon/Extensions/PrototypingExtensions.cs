@@ -9,6 +9,10 @@ namespace Kkommon.Extensions
         /// <summary>
         ///     Pass through method for dumping an object to the standard output.
         /// </summary>
+        /// <remarks>
+        ///     <see langword="null"/> will be passed through, possibly throwing a
+        ///     <see cref="NullReferenceException"/> on any subsequent call.
+        /// </remarks>
         /// <param name="this">The object to dump to stdout.</param>
         /// <param name="annotation">An optional annotation.</param>
         /// <typeparam name="T">The type of the object.</typeparam>

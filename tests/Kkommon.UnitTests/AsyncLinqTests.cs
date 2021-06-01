@@ -16,7 +16,7 @@ namespace Kkommon.UnitTests
             List<int> list = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             // asynchronously filters and returns IAsyncEnumerable
-            IAsyncEnumerable<int> asyncEnumerable = list.WhereAsync(
+            IAsyncEnumerable<int> asyncEnumerable = list.AsyncWhere(
                 async i =>
                 {
                     await Task.Yield();
@@ -37,7 +37,7 @@ namespace Kkommon.UnitTests
             List<int> list = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             // asynchronously filters and collects IAsyncEnumerable
-            IEnumerable<int> enumerable = await list.WhereAsync(
+            IEnumerable<int> enumerable = await list.AsyncWhere(
                     async i =>
                     {
                         await Task.Yield();

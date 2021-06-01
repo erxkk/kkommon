@@ -8,6 +8,10 @@ namespace Kkommon.Extensions.AsyncLinq
     /// <summary>
     ///     A collection of common linq methods with async delegates <see cref="IEnumerable{T}"/>.
     /// </summary>
+    /// <remarks>
+    ///     "Async" is intentionally used as a prefix instead of a suffix because it could create ambiguity with
+    ///     <see cref="IQueryable"/>.
+    /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class EnumerableAsyncExtensions
     {
@@ -25,7 +29,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a result indicating if all elements passed the predicate.
         /// </returns>
-        public static async Task<bool> AllAsync<TSource>(
+        public static async Task<bool> AsyncAll<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate,
             bool runParallel = false
@@ -62,7 +66,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with the aggregated result.
         /// </returns>
-        public static async Task<TSource> AggregateAsync<TSource>(
+        public static async Task<TSource> AsyncAggregate<TSource>(
             this IEnumerable<TSource> source,
             AsyncFunc<TSource, TSource, TSource> aggregator
         )
@@ -95,7 +99,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with the aggregated result.
         /// </returns>
-        public static async Task<TAggregate> AggregateAsync<TSource, TAggregate>(
+        public static async Task<TAggregate> AsyncAggregate<TSource, TAggregate>(
             this IEnumerable<TSource> source,
             TAggregate initial,
             AsyncFunc<TAggregate, TSource, TAggregate> aggregator
@@ -126,7 +130,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a result indicating if any element passed the predicate.
         /// </returns>
-        public static async Task<bool> AnyAsync<TSource>(
+        public static async Task<bool> AsyncAny<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate,
             bool runParallel = false
@@ -164,7 +168,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a result how many elements passed the predicate.
         /// </returns>
-        public static async Task<int> CountAsync<TSource>(
+        public static async Task<int> AsyncCount<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate,
             bool runParallel = false
@@ -208,7 +212,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     An <see cref="IAsyncEnumerable{T}"/> containing only the items that resulted in a distinct selector.
         /// </returns>
-        public static async IAsyncEnumerable<TSource> DistinctSelectAsync<TSource, TSelector>(
+        public static async IAsyncEnumerable<TSource> AsyncDistinctSelect<TSource, TSelector>(
             this IEnumerable<TSource> source,
             AsyncFunc<TSource, TSelector> selector,
             IEqualityComparer<TSelector>? equalityComparer = null
@@ -236,7 +240,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a result containing the first passing element; default if none is found.
         /// </returns>
-        public static async Task<TSource?> FirstOrDefaultAsync<TSource>(
+        public static async Task<TSource?> AsyncFirstOrDefault<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate
         )
@@ -264,7 +268,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     An <see cref="IAsyncEnumerable{T}"/> containing the selected elements.
         /// </returns>
-        public static async IAsyncEnumerable<TSelector> SelectAsync<TSource, TSelector>(
+        public static async IAsyncEnumerable<TSelector> AsyncSelect<TSource, TSelector>(
             this IEnumerable<TSource> source,
             AsyncFunc<TSource, TSelector> selector
         )
@@ -291,7 +295,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a <see cref="IEnumerable{T}"/> result containing the selected elements.
         /// </returns>
-        public static async Task<IEnumerable<TSelector>> SelectAsync<TSource, TSelector>(
+        public static async Task<IEnumerable<TSelector>> AsyncSelect<TSource, TSelector>(
             this IEnumerable<TSource> source,
             AsyncFunc<TSource, TSelector> selector,
             bool runParallel
@@ -327,7 +331,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     An <see cref="IAsyncEnumerable{T}"/> containing the elements that passed <see cref="predicate"/>.
         /// </returns>
-        public static async IAsyncEnumerable<TSource> WhereAsync<TSource>(
+        public static async IAsyncEnumerable<TSource> AsyncWhere<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate
         )
@@ -356,7 +360,7 @@ namespace Kkommon.Extensions.AsyncLinq
         /// <returns>
         ///     A <see cref="Task{T}"/> with a <see cref="IEnumerable{T}"/> result containing the selected elements.
         /// </returns>
-        public static async Task<IEnumerable<TSource>> WhereAsync<TSource>(
+        public static async Task<IEnumerable<TSource>> AsyncWhere<TSource>(
             this IEnumerable<TSource> source,
             AsyncPredicate<TSource> predicate,
             bool runParallel
