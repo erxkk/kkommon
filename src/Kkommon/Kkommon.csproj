@@ -3,13 +3,15 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <RootNamespace>Kkommon.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Update="Extensions\ArithmeticExtensions.Primitives.cs">
-        <DependentUpon>ArithmeticExtensions.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Ratio.Operators.cs">
+      <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Math\Ratio.Operators.cs">
         <DependentUpon>Ratio.cs</DependentUpon>
       </Compile>
     </ItemGroup>

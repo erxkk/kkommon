@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kkommon", "src\Kkommon\Kkommon.csproj", "{126C5B2B-7277-419D-8E4B-CFB04BB0460A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kkommon.UnitTests", "tests\Kkommon.UnitTests\Kkommon.UnitTests.csproj", "{599C5F00-7BA1-4EC7-9991-C792F0A35E59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kkommon.Tests", "tests\Kkommon.Tests\Kkommon.Tests.csproj", "{599C5F00-7BA1-4EC7-9991-C792F0A35E59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

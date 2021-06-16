@@ -2,7 +2,7 @@ using System;
 
 using Xunit;
 
-namespace Kkommon.UnitTests
+namespace Kkommon.Tests
 {
     public sealed class PreconditionTests
     {
