@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 using JetBrains.Annotations;
 
-namespace Kkommon.ArithmeticExtensions
+namespace Kkommon.Extensions.Arithmetic
 {
     /// <summary>
     ///     A collection of extension methods as syntactic sugar for common arithmetic operations.

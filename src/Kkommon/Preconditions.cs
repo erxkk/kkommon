@@ -2,7 +2,7 @@ using System;
 
 using JetBrains.Annotations;
 
-using Kkommon.ArithmeticExtensions;
+using Kkommon.Extensions.Arithmetic;
 
 namespace Kkommon
 {
@@ -30,14 +30,15 @@ namespace Kkommon
         ///     given range bounds.
         /// </summary>
         /// <remarks>
+        ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
+        /// </remarks>
+        /// <remarks>
         ///     The given range is interpreted as left-inclusive and right-exclusive.
         /// </remarks>
         /// <param name="argument">The passed argument value.</param>
         /// <param name="lowerBound">The lower inclusive bound to check against.</param>
         /// <param name="upperBound">The upper exclusive bound to check against.</param>
         /// <param name="parameterName">The name of the caller parameter.</param>
-        /// <param name="leftExclusive">Whether the given range is left exclusive; defaults to false.</param>
-        /// <param name="rightExclusive">Whether the given range is right inclusive; defaults to true.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is out side of the given range bounds.
         /// </exception>
@@ -45,13 +46,40 @@ namespace Kkommon
             int argument,
             int lowerBound,
             int upperBound,
-            [InvokerParameterName] string parameterName,
-            bool leftExclusive = false,
-            bool rightExclusive = true
+            [InvokerParameterName] string parameterName
         )
         {
-            if (!argument.IsInRange(lowerBound, upperBound, leftExclusive, rightExclusive))
+            if (!argument.IsInRange(lowerBound, upperBound))
                 Throw.ArgumentOutOfRange(argument, lowerBound, upperBound, parameterName);
+        }
+
+        /// <summary>
+        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is outside of the
+        ///     given range bounds.
+        /// </summary>
+        /// <remarks>
+        ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
+        /// </remarks>
+        /// <remarks>
+        ///     The given range is interpreted as left-inclusive and right-exclusive.
+        /// </remarks>
+        /// <param name="argument">The passed argument value.</param>
+        /// <param name="range">The range to check against.</param>
+        /// <param name="parameterName">The name of the caller parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The <paramref name="argument" /> is out side of the given range bounds.
+        /// </exception>
+        public static void InRange(int argument, Range range, [InvokerParameterName] string parameterName)
+        {
+            if (!argument.IsInRange(range))
+            {
+                Throw.ArgumentOutOfRange(
+                    argument,
+                    (range.Start.IsFromEnd ? int.MinValue : range.Start.Value),
+                    (range.End.IsFromEnd ? int.MaxValue : range.End.Value),
+                    parameterName
+                );
+            }
         }
     }
 }

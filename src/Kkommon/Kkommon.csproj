@@ -14,6 +14,9 @@
       <Compile Update="Math\Ratio.Operators.cs">
         <DependentUpon>Ratio.cs</DependentUpon>
       </Compile>
+      <Compile Update="Extensions\ArithmeticExtensions.Primitives.cs">
+        <DependentUpon>ArithmeticExtensions.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
