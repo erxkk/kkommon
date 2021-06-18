@@ -14,33 +14,24 @@ namespace Kkommon
         /// <summary>
         ///     Throws a <see cref="ArgumentOutOfRangeException" />.
         /// </summary>
+        /// <remarks>
+        ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
+        /// </remarks>
         /// <param name="value">The actual value that was outside of the given range.</param>
         /// <param name="lowerBound">The lower bound of the given range.</param>
         /// <param name="upperBound">The upper bound of the given range.</param>
         /// <param name="parameterName">The name of the parameter that was empty.</param>
-        /// <param name="leftInclusive">Whether ot not the lower bound is inclusive</param>
-        /// <param name="rightExclusive">Whether ot not the upper bound is exclusive</param>
-        /// <typeparam name="T">The type the <paramref name="value" /> is comparable to.</typeparam>
         /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
         [DoesNotReturn]
         public static void ArgumentOutOfRange(
             int value,
             int lowerBound,
             int upperBound,
-            string parameterName,
-            bool leftInclusive = true,
-            bool rightExclusive = true
+            [InvokerParameterName] string parameterName
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
-            string.Format(
-                "{0} must not be less than {1}{2} or greater than {3}{4}",
-                parameterName,
-                leftInclusive ? "or equal to " : "",
-                lowerBound,
-                rightExclusive ? "" : "or equal to ",
-                upperBound
-            )
+            $"{parameterName} must not be less than {lowerBound} or greater than {upperBound}"
         );
     }
 }

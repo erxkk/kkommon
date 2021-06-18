@@ -32,9 +32,6 @@ namespace Kkommon
         /// <remarks>
         ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
         /// </remarks>
-        /// <remarks>
-        ///     The given range is interpreted as left-inclusive and right-exclusive.
-        /// </remarks>
         /// <param name="argument">The passed argument value.</param>
         /// <param name="lowerBound">The lower inclusive bound to check against.</param>
         /// <param name="upperBound">The upper exclusive bound to check against.</param>
@@ -59,9 +56,6 @@ namespace Kkommon
         /// </summary>
         /// <remarks>
         ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
-        /// </remarks>
-        /// <remarks>
-        ///     The given range is interpreted as left-inclusive and right-exclusive.
         /// </remarks>
         /// <param name="argument">The passed argument value.</param>
         /// <param name="range">The range to check against.</param>

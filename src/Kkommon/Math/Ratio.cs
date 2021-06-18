@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using JetBrains.Annotations;
 
@@ -12,6 +13,7 @@ namespace Kkommon.Math
     ///     All arithmetic operations can be see as operations on (Numerator / Denominator), returning a new ratio.
     /// </remarks>
     [PublicAPI]
+    [DebuggerDisplay("{" + nameof(Ratio.DebuggerDisplay) + ",nq}")]
     public readonly partial struct Ratio : IEquatable<Ratio>, IComparable<Ratio>
     {
         /// <summary>
@@ -39,6 +41,8 @@ namespace Kkommon.Math
         ///     The <see langword="double" /> value of the <see cref="Ratio" />.
         /// </summary>
         public double DValue => (double) Numerator / Denominator;
+
+        private string DebuggerDisplay => ToString();
 
         /// <summary>
         ///     Creates a new <see cref="Ratio" /> with the given <paramref name="numerator" /> and

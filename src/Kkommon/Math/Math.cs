@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -26,15 +27,19 @@ namespace Kkommon.Math
             while (a != b)
             {
                 if (a > b)
+                {
                     checked
                     {
                         a -= b;
                     }
+                }
                 else
+                {
                     checked
                     {
                         b -= a;
                     }
+                }
             }
 
             return a;
@@ -58,15 +63,19 @@ namespace Kkommon.Math
             while (a != b)
             {
                 if (a > b)
+                {
                     checked
                     {
                         b += initialB;
                     }
+                }
                 else
+                {
                     checked
                     {
                         a += initialA;
                     }
+                }
             }
 
             return a;
