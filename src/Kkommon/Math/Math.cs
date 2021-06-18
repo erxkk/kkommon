@@ -21,6 +21,7 @@ namespace Kkommon.Math
         /// </returns>
         /// <exception cref="OverflowException">The operation resulted in an overflow.</exception>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Gcd(long a, long b)
         {
             // using Euclid's original algorithm instead of the improved euclidean algorithm as it avoids division
@@ -55,6 +56,7 @@ namespace Kkommon.Math
         /// </returns>
         /// <exception cref="OverflowException">The operation resulted in an overflow.</exception>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Lcm(long a, long b)
         {
             long initialA = a;

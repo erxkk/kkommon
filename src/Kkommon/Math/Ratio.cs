@@ -54,11 +54,13 @@ namespace Kkommon.Math
         public Ratio(int numerator, int denominator)
         {
             if (denominator == 0)
+            {
                 throw new ArgumentOutOfRangeException(
                     nameof(denominator),
                     denominator,
                     "The denominator must not be zero."
                 );
+            }
 
             // normalize all ratios to have sign at numerator if at all
             // this allows for easier equality
@@ -83,6 +85,7 @@ namespace Kkommon.Math
         /// <remarks>
         ///     If this <see cref="Ratio" /> was negative then the sign will be kept on the numerator after switching.
         /// </remarks>
+        /// <example>20/40 => 40/20</example>
         /// <returns>
         ///     The a new reciprocal <see cref="Ratio" />.
         /// </returns>
@@ -93,12 +96,18 @@ namespace Kkommon.Math
         ///     Returns a simplified reciprocal <see cref="Ratio" />, see <see cref="Simplify" /> and
         ///     <see cref="Reciprocal" /> for more information.
         /// </summary>
+        /// <example>20/40 => 2/1</example>
         /// <returns>
         ///     A new simplified reciprocal <see cref="Ratio" />.
         /// </returns>
         [Pure]
         public Ratio SimplifiedReciprocal() => Ratio.GetSimplifiedRatio(Denominator, Numerator);
 
+        /// <summary>
+        ///     Deconstructs this ratio into a tuple.
+        /// </summary>
+        /// <param name="numerator">The numerator of this ratio.</param>
+        /// <param name="denominator">The denominator of this ratio.</param>
         public void Deconstruct(out int numerator, out int denominator)
         {
             numerator = Numerator;
@@ -106,13 +115,7 @@ namespace Kkommon.Math
         }
 
         /// <inheritdoc />
-        public int CompareTo(Ratio other)
-        {
-            if (FValue < other.FValue) return -1;
-            if (FValue > other.FValue) return 1;
-
-            return 0;
-        }
+        public int CompareTo(Ratio other) => (this - other).Numerator;
 
         /// <inheritdoc />
         [Pure]
@@ -145,9 +148,8 @@ namespace Kkommon.Math
         ///     <paramref name="denominator" />.
         /// </summary>
         /// <remarks>
-        ///     The simplified <see cref="Ratio" /> is found by using the
-        ///     <seeMath.Gcdminator"/> function for elimination.
-        /// 
+        ///     The simplified <see cref="Ratio" /> is found by using the <see cref="Math.Gcd"/> function for
+        ///     elimination.
         /// </remarks>
         /// <param name="numerator">The given numerator.</param>
         /// <param name="denominator">The given denominator.</param>
