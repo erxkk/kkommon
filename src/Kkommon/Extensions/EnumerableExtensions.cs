@@ -59,7 +59,7 @@ namespace Kkommon.Extensions.Enumerable
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> is less than 1.</exception>
         [Pure]
-        public static bool CountAtLeast<TSource>(
+        public static bool HasAtLeast<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int count
         )
@@ -86,7 +86,7 @@ namespace Kkommon.Extensions.Enumerable
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> is less than 1.</exception>
         [Pure]
-        public static bool CountAtMost<TSource>(
+        public static bool HasAtMost<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int count
         )
