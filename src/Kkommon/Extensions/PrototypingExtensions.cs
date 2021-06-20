@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -24,16 +26,14 @@ namespace Kkommon.Extensions.Prototyping
         ///     The object itself.
         /// </returns>
         [Pure]
-        [CollectionAccess(CollectionAccessType.Read)]
-        [return: MaybeNull]
-        public static T Dump<T>([MaybeNull] this T @this, string? annotation = null)
+        public static T? Dump<T>([NoEnumeration] this T? @this, string? annotation = null)
         {
-            string representation = @this?.ToString() ?? "<null>";
+            string representation = $"{typeof(T).Name}: {(@this?.ToString() ?? "<null>")}";
 
             Console.WriteLine(
                 annotation is null
                     ? representation
-                    : $"{annotation} {{{Environment.NewLine}{representation}{Environment.NewLine}}}"
+                    : $"{annotation} {{{Environment.NewLine}  {representation}{Environment.NewLine}}}"
             );
 
             return @this;

@@ -2,5 +2,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a3b02b07_002Da63b_002D4c0e_002Da662_002Dabe65ced9b90/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from RatioTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Math.Tests.ArithmeticTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.AsyncEventTests.Test&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.AsyncEventTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

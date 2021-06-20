@@ -13,40 +13,53 @@ namespace Kkommon
     [PublicAPI]
     public sealed class AsyncEvent<TEventArgs> where TEventArgs : EventArgs
     {
+        private ErrorHandler? _asyncEventErrorHandler;
         private ImmutableArray<Handler> _handlers = ImmutableArray<Handler>.Empty;
+
+        /// <summary>
+        ///     Creates a new async event with no specified error handler.
+        /// </summary>
+        public AsyncEvent() { }
+
+        /// <summary>
+        ///     Creates a new async event with the specified error handler.
+        /// </summary>
+        /// <param name="asyncEventErrorHandler"></param>
+        public AsyncEvent(ErrorHandler asyncEventErrorHandler)
+            => _asyncEventErrorHandler = asyncEventErrorHandler;
 
         /// <summary>
         ///     Adds a new handler to the invocation list.
         /// </summary>
-        /// <param name="handler">The handler to add.</param>
+        /// <param name="asyncEventHandler">The handler to add.</param>
         [CollectionAccess(CollectionAccessType.UpdatedContent)]
-        public void Add(Handler handler)
+        public void Add(Handler asyncEventHandler)
         {
             lock (this)
             {
-                _handlers = _handlers.Add(handler);
+                _handlers = _handlers.Add(asyncEventHandler);
             }
         }
 
         /// <summary>
         ///     Removes a handler from the invocation list.
         /// </summary>
-        /// <param name="handler">The handler to remove.</param>
+        /// <param name="asyncEventHandler">The handler to remove.</param>
         [CollectionAccess(CollectionAccessType.UpdatedContent)]
-        public void Remove(Handler handler)
+        public void Remove(Handler asyncEventHandler)
         {
             lock (this)
             {
-                _handlers = _handlers.Remove(handler);
+                _handlers = _handlers.Remove(asyncEventHandler);
             }
         }
 
         /// <summary>
         ///     Invokes the event asynchronously.
         /// </summary>
-        /// <param name="eventArgs">The event args to pass to the handlers.</param>
+        /// <param name="args">The event args to pass to the handlers.</param>
         [CollectionAccess(CollectionAccessType.Read)]
-        public async Task InvokeAsync(TEventArgs eventArgs)
+        public async Task InvokeAsync(TEventArgs args)
         {
             ImmutableArray<Handler> copy;
 
@@ -56,18 +69,29 @@ namespace Kkommon
             }
 
             foreach (Handler handler in copy)
-                await handler.Invoke(eventArgs);
+            {
+                try
+                {
+                    await handler.Invoke(args);
+                }
+                catch (Exception ex)
+                {
+                    if (_asyncEventErrorHandler is null)
+                        throw;
+
+                    await _asyncEventErrorHandler(args, ex);
+                }
+            }
         }
 
         /// <summary>
         ///     An asynchronous event handler delegate.
         /// </summary>
-        public delegate ValueTask Handler(TEventArgs e);
-    }
+        public delegate ValueTask Handler(TEventArgs args);
 
-    public class Test
-    {
-        private readonly AsyncEvent<EventArgs> _event;
-        public event AsyncEvent<EventArgs>.Handler Event { add => _event.Add(value); remove => _event.Remove(value); }
+        /// <summary>
+        ///     An asynchronous event error handler delegate.
+        /// </summary>
+        public delegate ValueTask ErrorHandler(TEventArgs args, Exception exception);
     }
 }

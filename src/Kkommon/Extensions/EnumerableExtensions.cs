@@ -32,15 +32,7 @@ namespace Kkommon.Extensions.Enumerable
         {
             Preconditions.NotNull(source, nameof(source));
 
-            int index = -1;
-
-            foreach (TSource item in source)
-            {
-                checked
-                {
-                    yield return (++index, item);
-                }
-            }
+            return source.Select((item, index) => (index, item));
         }
 
         /// <summary>
