@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Kkommon.Math;
 
-namespace Kkommon.Math.Tests
+namespace Kkommon.Tests.Math
 {
     public sealed partial class RatioTests
     {

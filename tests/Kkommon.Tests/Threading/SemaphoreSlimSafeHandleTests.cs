@@ -6,7 +6,7 @@ using Kkommon.Extensions.Semaphore;
 
 using Xunit;
 
-namespace Kkommon.Threading.Tests
+namespace Kkommon.Tests.Threading
 {
     public sealed class SemaphoreSlimSafeHandleTests
     {

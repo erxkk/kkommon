@@ -4,5 +4,11 @@
     &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Math.Tests.ArithmeticTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.AsyncEventTests.Test&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.AsyncEventTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.Is_Enumerable&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.Go_Back_N&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.No_State_Change&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.Traversal_No_State_Change&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.Goes_Until_End&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.HistoryTests.Overrides_Next&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

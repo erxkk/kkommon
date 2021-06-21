@@ -27,4 +27,10 @@
       <ProjectReference Include="..\..\src\Kkommon\Kkommon.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Math\RatioTests.TheoryData.cs">
+        <DependentUpon>RatioTests.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

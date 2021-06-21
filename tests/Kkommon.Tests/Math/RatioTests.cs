@@ -4,7 +4,7 @@ using Kkommon.Math;
 
 using Xunit;
 
-namespace Kkommon.Math.Tests
+namespace Kkommon.Tests.Math
 {
     public sealed partial class RatioTests
     {

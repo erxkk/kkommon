@@ -148,7 +148,7 @@ namespace Kkommon.Math
         ///     <paramref name="denominator" />.
         /// </summary>
         /// <remarks>
-        ///     The simplified <see cref="Ratio" /> is found by using the <see cref="Math.Gcd"/> function for
+        ///     The simplified <see cref="Ratio" /> is found by using the <see cref="MathAlgorithms.Gcd"/> function for
         ///     elimination.
         /// </remarks>
         /// <param name="numerator">The given numerator.</param>
@@ -160,7 +160,7 @@ namespace Kkommon.Math
         [Pure]
         public static Ratio GetSimplifiedRatio(int numerator, int denominator)
         {
-            var gcd = (int) Math.Gcd(numerator, denominator);
+            var gcd = (int) Algorithms.Math.Gcd(numerator, denominator);
 
             return new(numerator / gcd, denominator / gcd);
         }
