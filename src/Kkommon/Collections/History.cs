@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -9,6 +8,9 @@ using JetBrains.Annotations;
 
 namespace Kkommon
 {
+    // TODO: move to linked list implementation?
+    // a <=> b <=> Current <=> d <=> e
+
     /// <summary>
     ///     A class that represents a traversable history of items.
     /// </summary>
@@ -45,7 +47,9 @@ namespace Kkommon
         /// <summary>
         ///     Moves back in the history by one item.
         /// </summary>
-        /// <returns>The new current item.</returns>
+        /// <returns>
+        ///     The new current item.
+        /// </returns>
         /// <exception cref="InvalidOperationException">There are no items before the current item.</exception>
         [CollectionAccess(CollectionAccessType.Read)]
         public T GoBack()
@@ -59,7 +63,9 @@ namespace Kkommon
         /// <summary>
         ///     Tries to move back in the history by one item.
         /// </summary>
-        /// <returns><see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.</returns>
+        /// <returns>
+        ///     <see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.
+        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
         public bool TryGoBack() => TryGoBack(out _);
 
@@ -67,7 +73,9 @@ namespace Kkommon
         ///     Tries to move back in the history by one item.
         /// </summary>
         /// <param name="current">The new current item if moving back was successful.</param>
-        /// <returns><see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.</returns>
+        /// <returns>
+        ///     <see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.
+        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
         public bool TryGoBack([MaybeNullWhen(false)] out T current)
         {
@@ -87,7 +95,9 @@ namespace Kkommon
         /// <summary>
         ///     Moves forward in the history by one item.
         /// </summary>
-        /// <returns>The new current item.</returns>
+        /// <returns>
+        ///     The new current item.
+        /// </returns>
         /// <exception cref="InvalidOperationException">There are no items after the current item.</exception>
         [CollectionAccess(CollectionAccessType.Read)]
         public T GoForward()
@@ -101,7 +111,9 @@ namespace Kkommon
         /// <summary>
         ///     Tries to move forward in the history by one item.
         /// </summary>
-        /// <returns><see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.</returns>
+        /// <returns>
+        ///     <see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.
+        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
         public bool TryGoForward() => TryGoForward(out _);
 
@@ -109,7 +121,9 @@ namespace Kkommon
         ///     Tries to move forward in the history by one item.
         /// </summary>
         /// <param name="current">The new current item if moving forward was successful.</param>
-        /// <returns><see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.</returns>
+        /// <returns>
+        ///     <see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.
+        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
         public bool TryGoForward([MaybeNullWhen(false)] out T current)
         {
@@ -134,7 +148,7 @@ namespace Kkommon
         ///     <see cref="Previous"/>.
         /// </remarks>
         /// <param name="current">The new current item.</param>
-        [CollectionAccess(CollectionAccessType.UpdatedContent | CollectionAccessType.ModifyExistingContent)]
+        [CollectionAccess(CollectionAccessType.UpdatedContent)]
         public void Add(T? current)
         {
             if (!_empty)
@@ -145,15 +159,8 @@ namespace Kkommon
             _empty = false;
         }
 
-        // TODO: implement
-        [Obsolete("This Operation is not supported.")]
-        [CollectionAccess(CollectionAccessType.Read)]
-        bool ICollection<T>.Remove(T item) => throw new NotSupportedException();
-
-        /// <summary>
-        ///     Clears the collection.
-        /// </summary>
-        [CollectionAccess(CollectionAccessType.ModifyExistingContent | CollectionAccessType.UpdatedContent)]
+        /// <inheritdoc />
+        [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
         public void Clear()
         {
             Current = default;
@@ -172,13 +179,8 @@ namespace Kkommon
             return Current!.Equals(item) || _nextHistory.Contains(item!) || _previousHistory.Contains(item!);
         }
 
-        // TODO: implement
-        [Obsolete("This Operation is not supported.")]
-        [CollectionAccess(CollectionAccessType.Read)]
         void ICollection<T>.CopyTo(T[] array, int arrayIndex) => throw new NotSupportedException();
-
-        /// <inheritdoc />
-        [CollectionAccess(CollectionAccessType.Read)]
+        bool ICollection<T>.Remove(T item) => throw new NotSupportedException();
         bool ICollection<T>.IsReadOnly => false;
 
         /// <inheritdoc />
@@ -197,8 +199,6 @@ namespace Kkommon
                 yield return next;
         }
 
-        /// <inheritdoc />
-        [CollectionAccess(CollectionAccessType.Read)]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
