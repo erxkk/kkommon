@@ -9,10 +9,6 @@ using Kkommon.Threading;
 
 namespace Kkommon.Extensions.Semaphore
 {
-    /// <summary>
-    ///     Useful extensions to enter a semaphore and automatically releasing it in case of an exception by use of a
-    ///     <see cref="SemaphoreSlimSafeHandle" />.
-    /// </summary>
     [PublicAPI]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class SemaphoreExtensions

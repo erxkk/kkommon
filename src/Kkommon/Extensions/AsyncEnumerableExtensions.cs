@@ -7,9 +7,6 @@ using JetBrains.Annotations;
 
 namespace Kkommon.Extensions.AsyncEnumerable
 {
-    /// <summary>
-    ///     A collection of extension methods as syntactic sugar for <see cref="IAsyncEnumerable{T}" />.
-    /// </summary>
     [PublicAPI]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class AsyncEnumerableExtensions

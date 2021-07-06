@@ -8,9 +8,6 @@ using JetBrains.Annotations;
 
 namespace Kkommon.Extensions.Enumerable
 {
-    /// <summary>
-    ///     A collection of extension methods as syntactic sugar for <see cref="IEnumerable{T}" />.
-    /// </summary>
     [PublicAPI]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class EnumerableExtensions
@@ -92,20 +89,6 @@ namespace Kkommon.Extensions.Enumerable
             Preconditions.InRange(count, 1.., nameof(count));
 
             return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
-        }
-
-        // TODO: document
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Empty<TSource>([NoEnumeration] this IEnumerable<TSource> source)
-        {
-            Preconditions.NotNull(source, nameof(source));
-
-            if (source is ICollection<TSource> collection)
-                return collection.Count == 0;
-
-            using IEnumerator<TSource> e = source.GetEnumerator();
-            return !e.MoveNext();
         }
     }
 }

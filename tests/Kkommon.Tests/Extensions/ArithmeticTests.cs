@@ -2,7 +2,7 @@ using Kkommon.Extensions.Arithmetic;
 
 using Xunit;
 
-namespace Kkommon.Tests.Math
+namespace Kkommon.Tests.Extensions
 {
     public sealed class ArithmeticTests
     {

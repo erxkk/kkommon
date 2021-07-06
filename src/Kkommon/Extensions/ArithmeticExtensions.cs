@@ -5,9 +5,6 @@ using JetBrains.Annotations;
 
 namespace Kkommon.Extensions.Arithmetic
 {
-    /// <summary>
-    ///     A collection of extension methods as syntactic sugar for common arithmetic operations.
-    /// </summary>
     [PublicAPI]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static partial class ArithmeticExtensions

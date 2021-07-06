@@ -6,8 +6,6 @@
         <IsPackable>false</IsPackable>
 
         <Nullable>enable</Nullable>
-
-        <RootNamespace>Kkommon.UnitTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,8 +26,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Math\RatioTests.TheoryData.cs">
+      <Compile Update="RatioTests.TheoryData.cs">
         <DependentUpon>RatioTests.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Extensions\EnumerableChunkingTests.cs">
+        <DependentUpon>EnumerableTests.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

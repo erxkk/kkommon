@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <RootNamespace>Kkommon.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,11 +10,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Math\Ratio.Operators.cs">
+      <Compile Update="Ratio.Operators.cs">
         <DependentUpon>Ratio.cs</DependentUpon>
       </Compile>
       <Compile Update="Extensions\ArithmeticExtensions.Primitives.cs">
         <DependentUpon>ArithmeticExtensions.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Extensions\EnumerableExtensions.Chunking.cs">
+        <DependentUpon>EnumerableExtensions.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 
