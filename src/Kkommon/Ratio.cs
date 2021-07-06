@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 using JetBrains.Annotations;
 
-namespace Kkommon.Math
+namespace Kkommon
 {
     /// <summary>
     ///     A 64-bit struct that encapsulates a ratio of two 32-bit integers.
@@ -157,12 +157,17 @@ namespace Kkommon.Math
         ///     Returns a new simplified <see cref="Ratio" />.
         /// </returns>
         /// <exception cref="OverflowException">The internal gcd-computation resulted in an overflow.</exception>
+        /// <exception cref="OverflowException">The internal conversion result in an overflow.</exception>
         [Pure]
         public static Ratio GetSimplifiedRatio(int numerator, int denominator)
         {
-            var gcd = (int) Algorithms.Math.Gcd(numerator, denominator);
+            // if this overflows
+            ulong gcd = Algorithms.Math.Gcd((ulong) numerator, (ulong) denominator);
 
-            return new(numerator / gcd, denominator / gcd);
+            checked
+            {
+                return new((int) ((ulong) numerator / gcd), (int) ((ulong) denominator / gcd));
+            }
         }
 
         /// <summary>

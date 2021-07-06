@@ -1,10 +1,8 @@
 using System;
 
-using Kkommon.Math;
-
 using Xunit;
 
-namespace Kkommon.Tests.Math
+namespace Kkommon.Tests
 {
     public sealed partial class RatioTests
     {

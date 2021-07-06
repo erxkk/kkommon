@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
 
-namespace Kkommon.Math
+namespace Kkommon
 {
     // documentation omitted for obvious implementations
     public readonly partial struct Ratio

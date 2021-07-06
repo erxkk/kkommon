@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using Kkommon.Math;
-
-namespace Kkommon.Tests.Math
+namespace Kkommon.Tests
 {
     public sealed partial class RatioTests
     {

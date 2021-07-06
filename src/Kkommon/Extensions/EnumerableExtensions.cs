@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -28,7 +29,9 @@ namespace Kkommon.Extensions.Enumerable
         /// <exception cref="OverflowException">The enumeration resulted in an overflow.</exception>
         [Pure]
         [LinqTunnel]
-        public static IEnumerable<(int Index, TSource Item)> Enumerate<TSource>(this IEnumerable<TSource> source)
+        public static IEnumerable<(int Index, TSource Item)> Enumerate<TSource>(
+            [NoEnumeration] this IEnumerable<TSource> source
+        )
         {
             Preconditions.NotNull(source, nameof(source));
 
@@ -51,6 +54,7 @@ namespace Kkommon.Extensions.Enumerable
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> is less than 1.</exception>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasAtLeast<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int count
@@ -78,6 +82,7 @@ namespace Kkommon.Extensions.Enumerable
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="count"/> is less than 1.</exception>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasAtMost<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int count
@@ -87,6 +92,20 @@ namespace Kkommon.Extensions.Enumerable
             Preconditions.InRange(count, 1.., nameof(count));
 
             return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
+        }
+
+        // TODO: document
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Empty<TSource>([NoEnumeration] this IEnumerable<TSource> source)
+        {
+            Preconditions.NotNull(source, nameof(source));
+
+            if (source is ICollection<TSource> collection)
+                return collection.Count == 0;
+
+            using IEnumerator<TSource> e = source.GetEnumerator();
+            return !e.MoveNext();
         }
     }
 }
