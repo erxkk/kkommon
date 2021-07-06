@@ -6,7 +6,7 @@ using System.Linq;
 
 using JetBrains.Annotations;
 
-namespace Kkommon
+namespace Kkommon.Collections
 {
     // TODO: move to linked list implementation?
     // a <=> b <=> Current <=> d <=> e
@@ -24,7 +24,7 @@ namespace Kkommon
 
         /// <inheritdoc />
         [CollectionAccess(CollectionAccessType.Read)]
-        public int Count => _empty ? 1 + _previousHistory.Count + _nextHistory.Count : 0;
+        public int Count => _empty ? 0 : 1 + _previousHistory.Count + _nextHistory.Count;
 
         /// <summary>
         ///     The a collection of items before the current item.
