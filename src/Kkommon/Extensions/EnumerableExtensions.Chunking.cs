@@ -14,13 +14,6 @@ namespace Kkommon.Extensions.Enumerable
         /// <summary>
         ///     Returns chunks of a given size for the given <see cref="IEnumerable{T}"/>.
         /// </summary>
-        /// <remarks>
-        ///     Since enumeration cannot be avoided for types that don't implement <see cref="IList{T}"/>, the return
-        ///     type exposes <see cref="IList{T}"/> potentially allocating copies of the content, this is avoided where
-        ///     possible, but exposes new information like chunk size (for the last chunk) and new functionality like
-        ///     indexing for all chunks.
-        ///     <b>Do not</b> try to mutate the chunks other than indexing, those operations are not supported.
-        /// </remarks>
         /// <param name="source">The source enumerable to chunk.</param>
         /// <param name="chunkSize">The size of the chunks.</param>
         /// <typeparam name="TSource">The type of the elements in the source <see cref="IEnumerable{T}" />.</typeparam>
@@ -28,7 +21,7 @@ namespace Kkommon.Extensions.Enumerable
         ///     An <see cref="IEnumerable{T}"/> containing the chunks of the given <see cref="IEnumerable{T}"/>.
         /// </returns>
         [Pure]
-        public static IEnumerable<IList<TSource>> Chunk<TSource>(
+        public static IEnumerable<TSource[]> Chunk<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int chunkSize
         )
@@ -39,7 +32,6 @@ namespace Kkommon.Extensions.Enumerable
             return source switch
             {
                 TSource[] a => a.ChunkArray(chunkSize),
-                IList<TSource> l => l.ChunkList(chunkSize),
                 ICollection<TSource> c => c.ChunkCollection(chunkSize),
                 _ => source.ChunkEnumerable(chunkSize),
             };
@@ -107,38 +99,7 @@ namespace Kkommon.Extensions.Enumerable
             }
         }
 
-        private static IEnumerable<IList<TSource>> ChunkList<TSource>(
-            [NoEnumeration] this IList<TSource> source,
-            int chunkSize
-        )
-        {
-            if (source.Count == 0)
-            {
-                yield break;
-            }
-
-            if (source.Count <= chunkSize)
-            {
-                yield return source;
-            }
-            else
-            {
-                int chunkCount = Math.DivRem(source.Count, chunkSize, out int lastChunkSize);
-                int previous = 0;
-
-                for (int i = 0; i < chunkCount; i++)
-                {
-                    yield return new ListSegment<TSource>(source, previous, chunkSize);
-
-                    previous += chunkSize;
-                }
-
-                if (lastChunkSize != 0)
-                    yield return new ListSegment<TSource>(source, previous, lastChunkSize);
-            }
-        }
-
-        private static IEnumerable<IList<TSource>> ChunkArray<TSource>(
+        private static IEnumerable<TSource[]> ChunkArray<TSource>(
             [NoEnumeration] this TSource[] source,
             int chunkSize
         )
@@ -159,13 +120,19 @@ namespace Kkommon.Extensions.Enumerable
 
                 for (int i = 0; i < chunkCount; i++)
                 {
-                    yield return new ArraySegment<TSource>(source, previous, chunkSize);
+                    TSource[] chunk = new TSource[chunkSize];
+                    Array.Copy(source, chunkSize * i, chunk, 0, chunkSize);
+                    yield return chunk;
 
                     previous += chunkSize;
                 }
 
                 if (lastChunkSize != 0)
-                    yield return new ArraySegment<TSource>(source, previous, lastChunkSize);
+                {
+                    TSource[] chunk = new TSource[lastChunkSize];
+                    Array.Copy(source, chunkSize * chunkCount, chunk, 0, lastChunkSize);
+                    yield return chunk;
+                }
             }
         }
     }

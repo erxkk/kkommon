@@ -66,42 +66,6 @@ namespace Kkommon.Tests.Extensions
         }
 
         [Fact]
-        public void Chunks_Array_Into_Segments()
-        {
-            const int n = 3;
-
-            int[] intArray =
-            {
-                0, 1, 2,
-                3, 4, 5,
-                6, 7, 8,
-            };
-
-            IEnumerable<IList<int>> chunks = intArray.Chunk(n);
-
-            Assert.Equal(n, chunks.Count());
-            Assert.Equal(n, chunks.OfType<ArraySegment<int>>().Count());
-        }
-
-        [Fact]
-        public void Chunks_List_Into_Segments()
-        {
-            const int n = 3;
-
-            List<int> intArray = new(n * n)
-            {
-                0, 1, 2,
-                3, 4, 5,
-                6, 7, 8,
-            };
-
-            IEnumerable<IList<int>> chunks = intArray.Chunk(n);
-
-            Assert.Equal(n, chunks.Count());
-            Assert.Equal(n, chunks.OfType<ListSegment<int>>().Count());
-        }
-
-        [Fact]
         public void Chunks_Collection_Into_Arrays()
         {
             const int n = 3;
