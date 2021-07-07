@@ -34,7 +34,7 @@ namespace Kkommon
         /// </remarks>
         /// <param name="argument">The passed argument value.</param>
         /// <param name="lowerBound">The lower inclusive bound to check against.</param>
-        /// <param name="upperBound">The upper exclusive bound to check against.</param>
+        /// <param name="upperBound">The upper inclusive bound to check against.</param>
         /// <param name="parameterName">The name of the caller parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is out side of the given range bounds.
@@ -51,29 +51,43 @@ namespace Kkommon
         }
 
         /// <summary>
-        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is outside of the
-        ///     given range bounds.
+        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is less than or equal
+        ///     to the check value.
         /// </summary>
-        /// <remarks>
-        ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
-        /// </remarks>
         /// <param name="argument">The passed argument value.</param>
-        /// <param name="range">The range to check against.</param>
+        /// <param name="check">The value to check against.</param>
         /// <param name="parameterName">The name of the caller parameter.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///     The <paramref name="argument" /> is out side of the given range bounds.
+        ///     The <paramref name="argument" /> is less than or equal to the check value.
         /// </exception>
-        public static void InRange(int argument, Range range, [InvokerParameterName] string parameterName)
+        public static void Greater(
+            int argument,
+            int check,
+            [InvokerParameterName] string parameterName
+        )
         {
-            if (!argument.IsInRange(range))
-            {
-                Throw.ArgumentOutOfRange(
-                    argument,
-                    (range.Start.IsFromEnd ? int.MinValue : range.Start.Value),
-                    (range.End.IsFromEnd ? int.MaxValue : range.End.Value),
-                    parameterName
-                );
-            }
+            if (argument <= check)
+                Throw.ArgumentNotGreater(argument, check, parameterName);
+        }
+
+        /// <summary>
+        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is greater than or
+        ///     equal to the check value.
+        /// </summary>
+        /// <param name="argument">The passed argument value.</param>
+        /// <param name="check">The value to check against.</param>
+        /// <param name="parameterName">The name of the caller parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The <paramref name="argument" /> is greater than or equal to the check value.
+        /// </exception>
+        public static void Less(
+            int argument,
+            int check,
+            [InvokerParameterName] string parameterName
+        )
+        {
+            if (argument >= check)
+                Throw.ArgumentNotLess(argument, check, parameterName);
         }
     }
 }

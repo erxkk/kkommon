@@ -14,9 +14,6 @@ namespace Kkommon
         /// <summary>
         ///     Throws a <see cref="ArgumentOutOfRangeException" />.
         /// </summary>
-        /// <remarks>
-        ///     This range check is always inclusive, and the given range must be satisfy a..b where a &lt;= b.
-        /// </remarks>
         /// <param name="value">The actual value that was outside of the given range.</param>
         /// <param name="lowerBound">The lower bound of the given range.</param>
         /// <param name="upperBound">The upper bound of the given range.</param>
@@ -31,7 +28,43 @@ namespace Kkommon
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
-            $"{parameterName} must not be less than {lowerBound} or greater than {upperBound}"
+            $"{parameterName} must not be less than {lowerBound} or greater than {upperBound}."
+        );
+
+        /// <summary>
+        ///     Throws a <see cref="ArgumentOutOfRangeException" />.
+        /// </summary>
+        /// <param name="value">The actual value that was less than or equal to the check.</param>
+        /// <param name="check">The value to check against.</param>
+        /// <param name="parameterName">The name of the parameter that was empty.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
+        [DoesNotReturn]
+        public static void ArgumentNotGreater(
+            int value,
+            int check,
+            [InvokerParameterName] string parameterName
+        ) => throw new ArgumentOutOfRangeException(
+            parameterName,
+            value,
+            $"{parameterName} must not be greater than or equal to {check}."
+        );
+
+        /// <summary>
+        ///     Throws a <see cref="ArgumentOutOfRangeException" />.
+        /// </summary>
+        /// <param name="value">The actual value that was greater than or equal to the check.</param>
+        /// <param name="check">The value to check against.</param>
+        /// <param name="parameterName">The name of the parameter that was empty.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
+        [DoesNotReturn]
+        public static void ArgumentNotLess(
+            int value,
+            int check,
+            [InvokerParameterName] string parameterName
+        ) => throw new ArgumentOutOfRangeException(
+            parameterName,
+            value,
+            $"{parameterName} must not be less than or equal to {check}."
         );
     }
 }

@@ -58,7 +58,7 @@ namespace Kkommon.Extensions.Enumerable
         )
         {
             Preconditions.NotNull(source, nameof(source));
-            Preconditions.InRange(count, 1.., nameof(count));
+            Preconditions.Greater(count, 0, nameof(count));
 
             return source is ICollection<TSource> collection ? collection.Count >= count : source.Skip(count - 1).Any();
         }
@@ -86,7 +86,7 @@ namespace Kkommon.Extensions.Enumerable
         )
         {
             Preconditions.NotNull(source, nameof(source));
-            Preconditions.InRange(count, 1.., nameof(count));
+            Preconditions.Greater(count, 0, nameof(count));
 
             return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
         }

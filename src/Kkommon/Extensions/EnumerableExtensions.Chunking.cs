@@ -27,7 +27,7 @@ namespace Kkommon.Extensions.Enumerable
         )
         {
             Preconditions.NotNull(source, nameof(source));
-            Preconditions.InRange(chunkSize, 1.., nameof(chunkSize));
+            Preconditions.Greater(chunkSize, 1, nameof(chunkSize));
 
             return source switch
             {

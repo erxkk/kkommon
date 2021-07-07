@@ -1,204 +1,188 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 using JetBrains.Annotations;
 
 namespace Kkommon.Collections
 {
-    // TODO: move to linked list implementation?
-    // a <=> b <=> Current <=> d <=> e
-
     /// <summary>
     ///     A class that represents a traversable history of items.
     /// </summary>
     /// <typeparam name="T">The type of items this history contains.</typeparam>
     [PublicAPI]
-    public sealed class History<T> : ICollection<T>
+    public sealed class History<T> : IList<T>, IReadOnlyList<T>
     {
-        private bool _empty = true;
-        private readonly Stack<T> _previousHistory = new();
-        private readonly Stack<T> _nextHistory = new();
-
-        /// <inheritdoc />
-        [CollectionAccess(CollectionAccessType.Read)]
-        public int Count => _empty ? 0 : 1 + _previousHistory.Count + _nextHistory.Count;
+        private int _current = -1;
+        private readonly List<T> _history = new();
 
         /// <summary>
-        ///     The a collection of items before the current item.
+        ///     Gets or sets the item at the given relative index.
         /// </summary>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public IReadOnlyCollection<T> Previous => _previousHistory;
-
-        /// <summary>
-        ///     The a collection of items after the current item.
-        /// </summary>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public IReadOnlyCollection<T> Next => _nextHistory;
-
-        /// <summary>
-        ///     The current element of the history.
-        /// </summary>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public T? Current { get; private set; }
-
-        /// <summary>
-        ///     Moves back in the history by one item.
-        /// </summary>
-        /// <returns>
-        ///     The new current item.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">There are no items before the current item.</exception>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public T GoBack()
+        public T this[int index]
         {
-            if (!TryGoBack(out T? previous))
-                throw new InvalidOperationException("Could not go back, there are no elements.");
+            [CollectionAccess(CollectionAccessType.Read)]
+            get => _history[_current + index];
 
-            return previous;
+            [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
+            set => _history[_current + index] = value;
         }
 
         /// <summary>
-        ///     Tries to move back in the history by one item.
+        ///     Gets the total number of items in this history.
         /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.
-        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
-        public bool TryGoBack() => TryGoBack(out _);
+        public int Count => _history.Count;
 
         /// <summary>
-        ///     Tries to move back in the history by one item.
+        ///     Gets the total number of items in this history before the current.
         /// </summary>
-        /// <param name="current">The new current item if moving back was successful.</param>
-        /// <returns>
-        ///     <see langword="true"/> if there were items to move back to; otherwise <see langword="false"/>.
-        /// </returns>
         [CollectionAccess(CollectionAccessType.Read)]
-        public bool TryGoBack([MaybeNullWhen(false)] out T current)
+        public int CountPrevious => _current != -1 ? _current - 1 : 0;
+
+        /// <summary>
+        ///     Gets the number of items in this history after the current.
+        /// </summary>
+        [CollectionAccess(CollectionAccessType.Read)]
+        public int CountNext => _current != -1 ? _history.Count - _current : 0;
+
+        /// <summary>
+        ///     Move to the given relative index in the history.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The index was outside of the bounds of this history.
+        /// </exception>
+        [CollectionAccess(CollectionAccessType.Read)]
+        public void Move(int index)
         {
-            current = default;
+            Preconditions.InRange(_current + index, 0, _history.Count - 1, nameof(index));
 
-            if (_empty)
-                return false;
-
-            if (!_previousHistory.TryPop(out T? foundPrevious))
-                return false;
-
-            _nextHistory.Push(Current!);
-            Current = current = foundPrevious;
-            return true;
+            _current += index;
         }
 
-        /// <summary>
-        ///     Moves forward in the history by one item.
-        /// </summary>
-        /// <returns>
-        ///     The new current item.
-        /// </returns>
-        /// <exception cref="InvalidOperationException">There are no items after the current item.</exception>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public T GoForward()
-        {
-            if (!TryGoForward(out T? next))
-                throw new InvalidOperationException("Could not go forward, there are no elements.");
-
-            return next;
-        }
+#region IList<T>
 
         /// <summary>
-        ///     Tries to move forward in the history by one item.
-        /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.
-        /// </returns>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public bool TryGoForward() => TryGoForward(out _);
-
-        /// <summary>
-        ///     Tries to move forward in the history by one item.
-        /// </summary>
-        /// <param name="current">The new current item if moving forward was successful.</param>
-        /// <returns>
-        ///     <see langword="true"/> if there were items to move forward to; otherwise <see langword="false"/>.
-        /// </returns>
-        [CollectionAccess(CollectionAccessType.Read)]
-        public bool TryGoForward([MaybeNullWhen(false)] out T current)
-        {
-            current = default;
-
-            if (_empty)
-                return false;
-
-            if (!_nextHistory.TryPop(out T? foundNext))
-                return false;
-
-            _previousHistory.Push(Current!);
-            Current = current = foundNext;
-            return true;
-        }
-
-        /// <summary>
-        ///     Adds the given item to the history, making it the new current item.
+        ///     Returns the index of the first occurrence of a given value in a range of this history.
         /// </summary>
         /// <remarks>
-        ///     This will clear <see cref="Next"/> completely and move the <see cref="Current"/> to the
-        ///     <see cref="Previous"/>.
+        ///     Due to the nature of negative indexing for <see cref="History{T}"/> this will return
+        ///     <see cref="int.MinValue"/> to indicate that the element was not found. <see cref="int.MinValue"/>
+        ///     should realistically never be a valid index.
         /// </remarks>
-        /// <param name="current">The new current item.</param>
-        [CollectionAccess(CollectionAccessType.UpdatedContent)]
-        public void Add(T? current)
+        /// <param name="item">The item to get the relative index for.</param>
+        /// <returns>
+        ///     The index of the item if it was found; otherwise <see cref="int.MinValue"/>.
+        /// </returns>
+        [CollectionAccess(CollectionAccessType.Read)]
+        public int IndexOf(T item)
         {
-            if (!_empty)
-                _previousHistory.Push(Current!);
+            int index = _history.IndexOf(item);
 
-            Current = current;
-            _nextHistory.Clear();
-            _empty = false;
+            return index != -1 ? index - _current : int.MinValue;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Inserts a new item at the relative index.
+        /// </summary>
+        /// <param name="index">The relative index at which to insert the new item.</param>
+        /// <param name="item">The item to insert.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The index was not within the bounds of this history.
+        /// </exception>
+        [CollectionAccess(CollectionAccessType.UpdatedContent | CollectionAccessType.ModifyExistingContent)]
+        public void Insert(int index, T item) => _history.Insert(_current + index, item);
+
+        /// <summary>
+        ///     Removes an item at the relative index.
+        /// </summary>
+        /// <param name="index">The relative index at which to remove an item.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The index was not within the bounds of this history.
+        /// </exception>
+        [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
+        public void RemoveAt(int index)
+        {
+            _history.RemoveAt(_current + index);
+
+            if (index <= 0)
+                _current--;
+        }
+
+#endregion
+
+#region ICollection<T>
+
+        /// <summary>
+        ///     Adds the given item to this history, making it the new current item and removing all items after the
+        ///     previous current.
+        /// </summary>
+        /// <param name="item">The new current item.</param>
+        [CollectionAccess(CollectionAccessType.UpdatedContent | CollectionAccessType.ModifyExistingContent)]
+        public void Add(T item)
+        {
+            if (_current != -1 && _current + 1 < _history.Count)
+                _history.RemoveRange(_current + 1, _history.Count - _current - 1);
+
+            _history.Add(item);
+            _current++;
+        }
+
+        /// <summary>
+        ///     Removes all items form this history, including the current.
+        /// </summary>
         [CollectionAccess(CollectionAccessType.ModifyExistingContent)]
         public void Clear()
         {
-            Current = default;
-            _nextHistory.Clear();
-            _previousHistory.Clear();
-            _empty = true;
+            _history.Clear();
+            _current = -1;
         }
 
-        /// <inheritdoc />
-        [CollectionAccess(CollectionAccessType.Read)]
-        public bool Contains(T? item)
+        /// <summary>
+        ///     Removes the given item from this history..
+        /// </summary>
+        /// <param name="item">The new current item.</param>
+        /// <returns>
+        ///     <see langword="true"/> if the item was removed; otherwise <see langword="false"/>.
+        /// </returns>
+        [CollectionAccess(CollectionAccessType.UpdatedContent)]
+        public bool Remove(T item)
         {
-            if (_empty)
+            int index = _history.IndexOf(item);
+
+            if (index == -1)
                 return false;
 
-            return Current!.Equals(item) || _nextHistory.Contains(item!) || _previousHistory.Contains(item!);
+            _history.RemoveAt(index);
+
+            if (index <= _current)
+                _current--;
+
+            return true;
         }
 
-        void ICollection<T>.CopyTo(T[] array, int arrayIndex) => throw new NotSupportedException();
-        bool ICollection<T>.Remove(T item) => throw new NotSupportedException();
-        bool ICollection<T>.IsReadOnly => false;
+        /// <summary>
+        ///     Checks whether or not this history contains the given item.
+        /// </summary>
+        [CollectionAccess(CollectionAccessType.Read)]
+        public bool Contains(T item) => _history.Contains(item);
 
         /// <inheritdoc />
         [CollectionAccess(CollectionAccessType.Read)]
-        public IEnumerator<T> GetEnumerator()
-        {
-            if (_empty)
-                yield break;
+        public void CopyTo(T[] array, int arrayIndex) => _history.CopyTo(array, arrayIndex);
 
-            foreach (T previous in _previousHistory.Reverse())
-                yield return previous;
+        bool ICollection<T>.IsReadOnly => false;
 
-            yield return Current!;
+#endregion
 
-            foreach (T next in _nextHistory)
-                yield return next;
-        }
+#region IEnumerable<T>
+
+        /// <inheritdoc />
+        [CollectionAccess(CollectionAccessType.Read)]
+        public IEnumerator<T> GetEnumerator() => _history.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+#endregion
     }
 }
