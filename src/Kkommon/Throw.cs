@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -20,6 +21,7 @@ namespace Kkommon
         /// <param name="parameterName">The name of the parameter that was empty.</param>
         /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
         [DoesNotReturn]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ArgumentOutOfRange(
             int value,
             int lowerBound,
@@ -39,6 +41,7 @@ namespace Kkommon
         /// <param name="parameterName">The name of the parameter that was empty.</param>
         /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
         [DoesNotReturn]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ArgumentNotGreater(
             int value,
             int check,
@@ -57,6 +60,7 @@ namespace Kkommon
         /// <param name="parameterName">The name of the parameter that was empty.</param>
         /// <exception cref="ArgumentOutOfRangeException">Always.</exception>
         [DoesNotReturn]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ArgumentNotLess(
             int value,
             int check,

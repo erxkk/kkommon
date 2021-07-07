@@ -28,14 +28,18 @@ namespace Kkommon.Threading
         public void Dispose()
         {
             if (_semaphore is null)
+            {
                 throw new InvalidOperationException(
                     $"No {nameof(SemaphoreSlim)} set, do not use default ctor for {nameof(SemaphoreSlimSafeHandle)}"
                 );
+            }
 
             if (_isDisposed)
+            {
                 throw new InvalidOperationException(
                     "The Semaphore was already released by this handle."
                 );
+            }
 
             _semaphore.Release();
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 using JetBrains.Annotations;
 
@@ -19,6 +20,7 @@ namespace Kkommon
         /// <param name="parameterName">The name of the caller parameter.</param>
         /// <typeparam name="T">The type of the <paramref name="argument" />.</typeparam>
         /// <exception cref="ArgumentNullException">The <paramref name="argument" /> is null.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NotNull<T>([NoEnumeration] T? argument, [InvokerParameterName] string parameterName)
         {
             if (argument is null)
@@ -39,6 +41,7 @@ namespace Kkommon
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is out side of the given range bounds.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void InRange(
             int argument,
             int lowerBound,
@@ -60,6 +63,7 @@ namespace Kkommon
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is less than or equal to the check value.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Greater(
             int argument,
             int check,
@@ -80,6 +84,7 @@ namespace Kkommon
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is greater than or equal to the check value.
         /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Less(
             int argument,
             int check,

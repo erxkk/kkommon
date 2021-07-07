@@ -14,7 +14,7 @@ namespace Kkommon
     ///     of data but rather just another valid value for the type <typeparamref name="T" />.
     /// </remarks>
     [PublicAPI]
-    [DebuggerDisplay("{" + nameof(Optional<T>.DebuggerDisplay) + ",nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<T>
     {
         /// <summary>
@@ -27,8 +27,9 @@ namespace Kkommon
         ///     <see cref="HasValue" />.
         /// </summary>
         /// <exception cref="InvalidOperationException">The <see cref="Optional{T}" /> has no value.</exception>
-        public T Value
-            => HasValue ? ValueOrDefault! : throw new InvalidOperationException("The given optional was empty");
+        public T Value => HasValue
+            ? ValueOrDefault!
+            : throw new InvalidOperationException("The given optional was empty");
 
         /// <summary>
         ///     Returns the underlying <see cref="Value" /> or the default for <typeparamref name="T" /> if this
@@ -57,8 +58,7 @@ namespace Kkommon
 
         private string DebuggerDisplay => $"Optional<{typeof(T).Name}> {{ HasValue = {HasValue}, Value = {Value} }}";
 
-        public static implicit operator Optional<T>(T? value)
-            => value is not null ? new(value) : new Optional<T>();
+        public static implicit operator Optional<T>(T? value) => value is not null ? new(value) : new Optional<T>();
     }
 
     /// <summary>
