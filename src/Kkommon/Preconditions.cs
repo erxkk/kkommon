@@ -28,6 +28,19 @@ namespace Kkommon
         }
 
         /// <summary>
+        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given string argument is empty.
+        /// </summary>
+        /// <param name="argument">The passed argument value.</param>
+        /// <param name="parameterName">The name of the caller parameter.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="argument" /> is null.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void NotEmpty(string argument, [InvokerParameterName] string parameterName)
+        {
+            if (argument == string.Empty)
+                throw new ArgumentOutOfRangeException(parameterName, "The given string must not be empty.");
+        }
+
+        /// <summary>
         ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is outside of the
         ///     given range bounds.
         /// </summary>
