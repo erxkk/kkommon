@@ -15,9 +15,6 @@ namespace Kkommon.Exceptions
         public UnitTestException() { }
 
         /// <inheritdoc />
-        public UnitTestException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-
-        /// <inheritdoc />
         public UnitTestException(string? message) : base(message) { }
 
         /// <inheritdoc />
