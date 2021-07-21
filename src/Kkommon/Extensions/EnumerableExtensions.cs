@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Kkommon.Extensions.Enumerable
         /// <exception cref="OverflowException">The enumeration resulted in an overflow.</exception>
         [Pure]
         [LinqTunnel]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<(int Index, TSource Item)> Enumerate<TSource>(
             [NoEnumeration] this IEnumerable<TSource> source
         )
@@ -89,6 +91,27 @@ namespace Kkommon.Extensions.Enumerable
             Preconditions.Greater(count, 0, nameof(count));
 
             return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
+        }
+
+        /// <summary>
+        ///     Exposes the non-generic <see cref="IEnumerable"/> as a generic <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="source">The source collection.</param>
+        /// <returns>
+        ///     A generic <see cref="IEnumerable{T}" />.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     The <paramref name="source"/> is <see langword="null" />.
+        /// </exception>
+        [Pure]
+        [LinqTunnel]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<object> AsGeneric(this IEnumerable source)
+        {
+            Preconditions.NotNull(source, nameof(source));
+
+            foreach (object obj in source)
+                yield return obj;
         }
     }
 }
