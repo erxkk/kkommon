@@ -29,24 +29,16 @@ namespace Kkommon
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static ulong Gcd(ulong a, ulong b)
             {
-                // credit: https://en.wikipedia.org/wiki/Greatest_common_divisor
-                // using Euclid's original algorithm instead of the improved euclidean algorithm as it avoids division
-                while (a != b)
+                if (a < b)
                 {
-                    if (a > b)
-                    {
-                        checked
-                        {
-                            a -= b;
-                        }
-                    }
-                    else
-                    {
-                        checked
-                        {
-                            b -= a;
-                        }
-                    }
+                    (a, b) = (b, a);
+                }
+
+                while (b != 0)
+                {
+                    ulong h = a % b;
+                    a = b;
+                    b = h;
                 }
 
                 return a;
@@ -65,7 +57,11 @@ namespace Kkommon
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static ulong Lcm(ulong a, ulong b)
             {
-                // credit: https://en.wikipedia.org/wiki/Least_common_multiple
+                if (a < b)
+                {
+                    (a, b) = (b, a);
+                }
+
                 ulong initialA = a;
                 ulong initialB = b;
 
@@ -73,18 +69,16 @@ namespace Kkommon
                 {
                     if (a > b)
                     {
-                        checked
-                        {
-                            b += initialB;
-                        }
+                        (a, initialA, b, initialB) = (b, initialB, a, initialA);
                     }
-                    else
-                    {
-                        checked
-                        {
-                            a += initialA;
-                        }
-                    }
+                    
+                    ulong differenceMultiple = initialB * ((b - a) / initialB);
+                    a += differenceMultiple;
+
+                    if (a == b)
+                        break;
+
+                    a += initialA;
                 }
 
                 return a;

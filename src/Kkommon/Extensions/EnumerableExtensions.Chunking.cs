@@ -116,15 +116,12 @@ namespace Kkommon.Extensions.Enumerable
             else
             {
                 int chunkCount = Math.DivRem(source.Length, chunkSize, out int lastChunkSize);
-                int previous = 0;
 
                 for (int i = 0; i < chunkCount; i++)
                 {
                     TSource[] chunk = new TSource[chunkSize];
                     Array.Copy(source, chunkSize * i, chunk, 0, chunkSize);
                     yield return chunk;
-
-                    previous += chunkSize;
                 }
 
                 if (lastChunkSize != 0)
