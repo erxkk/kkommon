@@ -30,17 +30,17 @@ namespace Kkommon
         /// <summary>
         ///     The <see langword="decimal" /> value of the <see cref="Ratio" />.
         /// </summary>
-        public decimal Value => (decimal) Numerator / Denominator;
+        public decimal Value => (decimal)Numerator / Denominator;
 
         /// <summary>
         ///     The <see langword="float" /> value of the <see cref="Ratio" />.
         /// </summary>
-        public float FValue => (float) Numerator / Denominator;
+        public float FValue => (float)Numerator / Denominator;
 
         /// <summary>
         ///     The <see langword="double" /> value of the <see cref="Ratio" />.
         /// </summary>
-        public double DValue => (double) Numerator / Denominator;
+        public double DValue => (double)Numerator / Denominator;
 
         private string DebuggerDisplay => ToString();
 
@@ -64,8 +64,8 @@ namespace Kkommon
 
             // normalize all ratios to have sign at numerator if at all
             // this allows for easier equality
-            Numerator = numerator * System.Math.Sign(denominator);
-            Denominator = System.Math.Abs(denominator);
+            Numerator = numerator * Math.Sign(denominator);
+            Denominator = Math.Abs(denominator);
         }
 
         /// <summary>
@@ -157,16 +157,15 @@ namespace Kkommon
         ///     Returns a new simplified <see cref="Ratio" />.
         /// </returns>
         /// <exception cref="OverflowException">The internal gcd-computation resulted in an overflow.</exception>
-        /// <exception cref="OverflowException">The internal conversion result in an overflow.</exception>
+        /// <exception cref="OverflowException">The internal conversion resulted in an overflow.</exception>
         [Pure]
         public static Ratio GetSimplifiedRatio(int numerator, int denominator)
         {
-            // if this overflows
-            ulong gcd = Algorithms.Math.Gcd((ulong) numerator, (ulong) denominator);
+            ulong gcd = Algorithms.Math.Gcd((ulong)numerator, (ulong)denominator);
 
             checked
             {
-                return new((int) ((ulong) numerator / gcd), (int) ((ulong) denominator / gcd));
+                return new((int)((ulong)numerator / gcd), (int)((ulong)denominator / gcd));
             }
         }
 
