@@ -30,9 +30,7 @@ namespace Kkommon
             public static ulong Gcd(ulong a, ulong b)
             {
                 if (a < b)
-                {
                     (a, b) = (b, a);
-                }
 
                 while (b != 0)
                 {
@@ -58,9 +56,7 @@ namespace Kkommon
             public static ulong Lcm(ulong a, ulong b)
             {
                 if (a < b)
-                {
                     (a, b) = (b, a);
-                }
 
                 ulong initialA = a;
                 ulong initialB = b;
@@ -68,10 +64,8 @@ namespace Kkommon
                 while (a != b)
                 {
                     if (a > b)
-                    {
                         (a, initialA, b, initialB) = (b, initialB, a, initialA);
-                    }
-                    
+
                     ulong differenceMultiple = initialB * ((b - a) / initialB);
                     a += differenceMultiple;
 

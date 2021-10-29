@@ -80,7 +80,7 @@ namespace Kkommon.Tests
         [Theory]
         [ClassData(typeof(SimplificationTheoryData))]
         public void Simplification(Ratio ratio, Ratio result)
-            => Assert.Equal(ratio.Simplify(), result, Ratio.Comparer.INSTANCE);
+            => Assert.Equal(ratio.Reduce(), result, Ratio.Comparer.INSTANCE);
 
         [Theory]
         [ClassData(typeof(ReciprocalTheoryData))]

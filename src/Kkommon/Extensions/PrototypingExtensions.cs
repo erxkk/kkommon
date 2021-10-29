@@ -24,7 +24,7 @@ namespace Kkommon.Extensions.Prototyping
         ///     The object itself.
         /// </returns>
         [Pure]
-        [return: NotNullIfNotNull("@this")]
+        [return: NotNullIfNotNull("this")]
         public static T? Dump<T>([NoEnumeration] this T? @this, string? annotation = null)
         {
             string representation = $"{typeof(T).Name}: {(@this?.ToString() ?? "<null>")}";

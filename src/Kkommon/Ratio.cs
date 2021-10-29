@@ -69,14 +69,14 @@ namespace Kkommon
         }
 
         /// <summary>
-        ///     Returns a simplified <see cref="Ratio" />, that is, it eliminates the greatest common denominator.
+        ///     Returns a reduced <see cref="Ratio" />, that is, it eliminates the greatest common denominator.
         /// </summary>
         /// <example>20/40 => 1/2</example>
         /// <returns>
         ///     A new simplified <see cref="Ratio" />.
         /// </returns>
         [Pure]
-        public Ratio Simplify() => Ratio.GetSimplifiedRatio(Numerator, Denominator);
+        public Ratio Reduce() => Ratio.GetReducedRatio(Numerator, Denominator);
 
         /// <summary>
         ///     Returns the reciprocal of this <see cref="Ratio" />, that is, a <see cref="Ratio" /> with the numerator
@@ -93,7 +93,7 @@ namespace Kkommon
         public Ratio Reciprocal() => new(Denominator, Numerator);
 
         /// <summary>
-        ///     Returns a simplified reciprocal <see cref="Ratio" />, see <see cref="Simplify" /> and
+        ///     Returns a simplified reciprocal <see cref="Ratio" />, see <see cref="Reduce" /> and
         ///     <see cref="Reciprocal" /> for more information.
         /// </summary>
         /// <example>20/40 => 2/1</example>
@@ -101,7 +101,7 @@ namespace Kkommon
         ///     A new simplified reciprocal <see cref="Ratio" />.
         /// </returns>
         [Pure]
-        public Ratio SimplifiedReciprocal() => Ratio.GetSimplifiedRatio(Denominator, Numerator);
+        public Ratio SimplifiedReciprocal() => Ratio.GetReducedRatio(Denominator, Numerator);
 
         /// <summary>
         ///     Deconstructs this ratio into a tuple.
@@ -144,11 +144,11 @@ namespace Kkommon
         public string ToString(string format) => $"{Numerator.ToString(format)}/{Denominator.ToString(format)}";
 
         /// <summary>
-        ///     Creates a simplified <see cref="Ratio" /> from the given <paramref name="numerator" /> and
+        ///     Creates a reduced <see cref="Ratio" /> from the given <paramref name="numerator" /> and
         ///     <paramref name="denominator" />.
         /// </summary>
         /// <remarks>
-        ///     The simplified <see cref="Ratio" /> is found by using the <see cref="MathAlgorithms.Gcd"/> function for
+        ///     The reduced <see cref="Ratio" /> is found by using the <see cref="MathAlgorithms.Gcd"/> function for
         ///     elimination.
         /// </remarks>
         /// <param name="numerator">The given numerator.</param>
@@ -159,7 +159,7 @@ namespace Kkommon
         /// <exception cref="OverflowException">The internal gcd-computation resulted in an overflow.</exception>
         /// <exception cref="OverflowException">The internal conversion resulted in an overflow.</exception>
         [Pure]
-        public static Ratio GetSimplifiedRatio(int numerator, int denominator)
+        public static Ratio GetReducedRatio(int numerator, int denominator)
         {
             ulong gcd = Algorithms.Math.Gcd((ulong)numerator, (ulong)denominator);
 

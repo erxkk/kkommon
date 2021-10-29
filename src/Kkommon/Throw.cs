@@ -49,7 +49,7 @@ namespace Kkommon
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
-            $"{parameterName} must not be greater than or equal to {check}."
+            $"{parameterName} must not be less than or equal to {check}."
         );
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Kkommon
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
-            $"{parameterName} must not be less than or equal to {check}."
+            $"{parameterName} must not be greater than or equal to {check}."
         );
     }
 }

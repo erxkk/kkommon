@@ -37,7 +37,7 @@ namespace Kkommon.Threading
             if (_isDisposed)
             {
                 throw new InvalidOperationException(
-                    "The Semaphore was already released by this handle."
+                    $"The {nameof(SemaphoreSlim)} was already released by this {nameof(SemaphoreSlimSafeHandle)}."
                 );
             }
 

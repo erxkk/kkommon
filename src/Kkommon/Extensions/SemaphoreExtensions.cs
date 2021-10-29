@@ -43,6 +43,9 @@ namespace Kkommon.Extensions.Semaphore
         ///     Asynchronously waits to enter the <see cref="SemaphoreSlim" />, while observing a
         ///     <see cref="CancellationToken" />.
         /// </summary>
+        /// <param name="this">
+        ///     The <see cref="SemaphoreSlim" /> to enter.
+        /// </param>
         /// <param name="cancellationToken">
         ///     The <see cref="CancellationToken" /> token to observe.
         /// </param>

@@ -34,9 +34,9 @@ namespace Kkommon
         /// <param name="parameterName">The name of the caller parameter.</param>
         /// <exception cref="ArgumentNullException">The <paramref name="argument" /> is null.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotEmpty(string argument, [InvokerParameterName] string parameterName)
+        public static void NotEmpty([NoEnumeration] string argument, [InvokerParameterName] string parameterName)
         {
-            if (argument == string.Empty)
+            if (argument.Length == 0)
                 throw new ArgumentOutOfRangeException(parameterName, "The given string must not be empty.");
         }
 
@@ -51,6 +51,8 @@ namespace Kkommon
         /// <param name="lowerBound">The lower inclusive bound to check against.</param>
         /// <param name="upperBound">The upper inclusive bound to check against.</param>
         /// <param name="parameterName">The name of the caller parameter.</param>
+        /// <param name="leftInclusive">Whether the given range check is left inclusive; defaults to true.</param>
+        /// <param name="rightInclusive">Whether the given range check is right inclusive; defaults to false.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     The <paramref name="argument" /> is out side of the given range bounds.
         /// </exception>
@@ -59,10 +61,12 @@ namespace Kkommon
             int argument,
             int lowerBound,
             int upperBound,
-            [InvokerParameterName] string parameterName
+            [InvokerParameterName] string parameterName,
+            bool leftInclusive = true,
+            bool rightInclusive = false
         )
         {
-            if (!argument.IsInRange(lowerBound, upperBound))
+            if (!argument.IsInRange(lowerBound, upperBound, leftInclusive, rightInclusive))
                 Throw.ArgumentOutOfRange(argument, lowerBound, upperBound, parameterName);
         }
 

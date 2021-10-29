@@ -20,6 +20,7 @@ namespace Kkommon.Exceptions
 
         /// <inheritdoc />
         public UnreachableException(object? invalidObject)
+            : base("An invalidObject caused an invalid branch to be reached.")
             => InvalidObject = invalidObject;
 
         /// <inheritdoc />

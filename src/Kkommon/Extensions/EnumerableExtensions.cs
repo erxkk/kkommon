@@ -96,6 +96,9 @@ namespace Kkommon.Extensions.Enumerable
         /// <summary>
         ///     Exposes the non-generic <see cref="IEnumerable"/> as a generic <see cref="IEnumerable{T}"/>.
         /// </summary>
+        /// <remarks>
+        ///     This is used to safely expose <see cref="IEnumerable{T}"/> extension methods.
+        /// </remarks>
         /// <param name="source">The source collection.</param>
         /// <returns>
         ///     A generic <see cref="IEnumerable{T}" />.
