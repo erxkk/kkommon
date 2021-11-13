@@ -28,7 +28,7 @@ namespace Kkommon.Extensions.AsyncEnumerable
             [InstantHandle] this IAsyncEnumerable<TSource> source
         )
         {
-            Preconditions.NotNull(source, nameof(source));
+            Preconditions.NotNull(source);
 
             List<TSource> result = new();
 

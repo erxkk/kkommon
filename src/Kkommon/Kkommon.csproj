@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
@@ -17,6 +17,9 @@
       </Compile>
       <Compile Update="Extensions\EnumerableExtensions.Chunking.cs">
         <DependentUpon>EnumerableExtensions.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Extensions\DumpConfig.cs">
+        <DependentUpon>PrototypingExtensions.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

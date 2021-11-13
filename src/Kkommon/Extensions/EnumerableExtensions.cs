@@ -32,7 +32,7 @@ namespace Kkommon.Extensions.Enumerable
             [NoEnumeration] this IEnumerable<TSource> source
         )
         {
-            Preconditions.NotNull(source, nameof(source));
+            Preconditions.NotNull(source);
 
             return source.Select((item, index) => (index, item));
         }
@@ -59,8 +59,8 @@ namespace Kkommon.Extensions.Enumerable
             int count
         )
         {
-            Preconditions.NotNull(source, nameof(source));
-            Preconditions.Greater(count, 0, nameof(count));
+            Preconditions.NotNull(source);
+            Preconditions.Greater(count, 0);
 
             return source is ICollection<TSource> collection ? collection.Count >= count : source.Skip(count - 1).Any();
         }
@@ -87,8 +87,8 @@ namespace Kkommon.Extensions.Enumerable
             int count
         )
         {
-            Preconditions.NotNull(source, nameof(source));
-            Preconditions.Greater(count, 0, nameof(count));
+            Preconditions.NotNull(source);
+            Preconditions.Greater(count, 0);
 
             return source is ICollection<TSource> collection ? collection.Count <= count : !source.Skip(count).Any();
         }
@@ -111,7 +111,7 @@ namespace Kkommon.Extensions.Enumerable
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<object> AsGeneric(this IEnumerable source)
         {
-            Preconditions.NotNull(source, nameof(source));
+            Preconditions.NotNull(source);
 
             foreach (object obj in source)
                 yield return obj;

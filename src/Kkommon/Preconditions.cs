@@ -21,7 +21,10 @@ namespace Kkommon
         /// <typeparam name="T">The type of the <paramref name="argument" />.</typeparam>
         /// <exception cref="ArgumentNullException">The <paramref name="argument" /> is null.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotNull<T>([NoEnumeration] T? argument, [InvokerParameterName] string parameterName)
+        public static void NotNull<T>(
+            [NoEnumeration] T? argument,
+            [CallerArgumentExpression("argument")] string parameterName = null!
+        )
         {
             if (argument is null)
                 throw new ArgumentNullException(parameterName);
@@ -34,7 +37,10 @@ namespace Kkommon
         /// <param name="parameterName">The name of the caller parameter.</param>
         /// <exception cref="ArgumentNullException">The <paramref name="argument" /> is null.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void NotEmpty([NoEnumeration] string argument, [InvokerParameterName] string parameterName)
+        public static void NotEmpty(
+            [NoEnumeration] string argument,
+            [CallerArgumentExpression("argument")] string parameterName = null!
+        )
         {
             if (argument.Length == 0)
                 throw new ArgumentOutOfRangeException(parameterName, "The given string must not be empty.");
@@ -61,9 +67,9 @@ namespace Kkommon
             int argument,
             int lowerBound,
             int upperBound,
-            [InvokerParameterName] string parameterName,
             bool leftInclusive = true,
-            bool rightInclusive = false
+            bool rightInclusive = false,
+            [CallerArgumentExpression("argument")] string parameterName = null!
         )
         {
             if (!argument.IsInRange(lowerBound, upperBound, leftInclusive, rightInclusive))
@@ -84,7 +90,7 @@ namespace Kkommon
         public static void Greater(
             int argument,
             int check,
-            [InvokerParameterName] string parameterName
+            [CallerArgumentExpression("argument")] string parameterName = null!
         )
         {
             if (argument <= check)
@@ -105,10 +111,31 @@ namespace Kkommon
         public static void Less(
             int argument,
             int check,
-            [InvokerParameterName] string parameterName
+            [CallerArgumentExpression("argument")] string parameterName = null!
         )
         {
             if (argument >= check)
+                Throw.ArgumentNotLess(argument, check, parameterName);
+        }
+
+        /// <summary>
+        ///     Throws a default <see cref="ArgumentOutOfRangeException" /> if the given argument is equal to the  check
+        ///     value.
+        /// </summary>
+        /// <param name="argument">The passed argument value.</param>
+        /// <param name="check">The value to check against.</param>
+        /// <param name="parameterName">The name of the caller parameter.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The <paramref name="argument" /> is equal to the check value.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void NotEqual(
+            int argument,
+            int check,
+            [CallerArgumentExpression("argument")] string parameterName = null!
+        )
+        {
+            if (argument == check)
                 Throw.ArgumentNotLess(argument, check, parameterName);
         }
     }

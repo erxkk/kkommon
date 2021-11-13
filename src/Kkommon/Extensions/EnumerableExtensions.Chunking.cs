@@ -21,13 +21,14 @@ namespace Kkommon.Extensions.Enumerable
         ///     An <see cref="IEnumerable{T}"/> containing the chunks of the given <see cref="IEnumerable{T}"/>.
         /// </returns>
         [Pure]
-        public static IEnumerable<TSource[]> Chunk<TSource>(
+        [Obsolete("use built in IEnumerable.Chunk()")]
+        public static IEnumerable<TSource[]> ChunkOld<TSource>(
             [InstantHandle] this IEnumerable<TSource> source,
             int chunkSize
         )
         {
-            Preconditions.NotNull(source, nameof(source));
-            Preconditions.Greater(chunkSize, 1, nameof(chunkSize));
+            Preconditions.NotNull(source);
+            Preconditions.Greater(chunkSize, 1);
 
             return source switch
             {

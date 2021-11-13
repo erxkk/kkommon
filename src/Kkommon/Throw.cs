@@ -26,7 +26,7 @@ namespace Kkommon
             int value,
             int lowerBound,
             int upperBound,
-            [InvokerParameterName] string parameterName
+            [CallerArgumentExpression("value")] string parameterName = null!
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
@@ -45,7 +45,7 @@ namespace Kkommon
         public static void ArgumentNotGreater(
             int value,
             int check,
-            [InvokerParameterName] string parameterName
+            [CallerArgumentExpression("value")] string parameterName = null!
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,
@@ -64,7 +64,7 @@ namespace Kkommon
         public static void ArgumentNotLess(
             int value,
             int check,
-            [InvokerParameterName] string parameterName
+            [CallerArgumentExpression("value")] string parameterName = null!
         ) => throw new ArgumentOutOfRangeException(
             parameterName,
             value,

@@ -1,7 +1,4 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=29c885fd_002D8b06_002D4d64_002D8112_002D0403b5408368/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Finds_Greatest_Common_Denominator" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.Math.AlgorithmMathTests.Finds_Greatest_Common_Denominator&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::599C5F00-7BA1-4EC7-9991-C792F0A35E59::net5.0::Kkommon.Tests.Math.AlgorithmMathTests.Finds_Least_Common_Multiple&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+  &lt;Project Location="/home/erxkk/Source/erxkk/kkommon/tests/Kkommon.Tests" Presentation="&amp;lt;Kkommon.Tests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

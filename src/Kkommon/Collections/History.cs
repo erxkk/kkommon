@@ -55,7 +55,7 @@ namespace Kkommon.Collections
         [CollectionAccess(CollectionAccessType.Read)]
         public void Move(int index)
         {
-            Preconditions.InRange(_current + index, 0, _history.Count - 1, nameof(index));
+            Preconditions.InRange(_current + index, 0, _history.Count);
 
             _current += index;
         }

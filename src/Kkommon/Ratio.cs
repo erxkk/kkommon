@@ -53,14 +53,7 @@ namespace Kkommon
         /// <exception cref="ArgumentOutOfRangeException">The denominator is 0.</exception>
         public Ratio(int numerator, int denominator)
         {
-            if (denominator == 0)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(denominator),
-                    denominator,
-                    "The denominator must not be zero."
-                );
-            }
+            Preconditions.NotEqual(denominator, 0);
 
             // normalize all ratios to have sign at numerator if at all
             // this allows for easier equality

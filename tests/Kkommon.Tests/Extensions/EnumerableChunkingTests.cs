@@ -23,7 +23,7 @@ namespace Kkommon.Tests.Extensions
                 6, 7, 8,
             };
 
-            IEnumerable<IList<int>> chunks = intArray.Chunk(n);
+            IEnumerable<IList<int>> chunks = intArray.ChunkOld(n);
 
             Assert.Equal(n, chunks.Count());
 
@@ -45,7 +45,7 @@ namespace Kkommon.Tests.Extensions
                 9,
             };
 
-            IEnumerable<IList<int>> chunks = intArray.Chunk(n);
+            IEnumerable<IList<int>> chunks = intArray.ChunkOld(n);
 
             Assert.Equal(n + 1, chunks.Count());
 
@@ -60,7 +60,7 @@ namespace Kkommon.Tests.Extensions
         {
             const int n = 3;
             int[] intArray = Array.Empty<int>();
-            IEnumerable<IList<int>> chunks = intArray.Chunk(n);
+            IEnumerable<IList<int>> chunks = intArray.ChunkOld(n);
 
             Assert.Empty(chunks);
         }
@@ -79,7 +79,7 @@ namespace Kkommon.Tests.Extensions
                 }
             );
 
-            IEnumerable<IList<int>> chunks = intCollection.Chunk(n);
+            IEnumerable<IList<int>> chunks = intCollection.ChunkOld(n);
 
             Assert.Equal(n, chunks.Count());
             Assert.Equal(n, chunks.OfType<int[]>().Count());
@@ -99,7 +99,7 @@ namespace Kkommon.Tests.Extensions
                 }
             );
 
-            IEnumerable<IList<int>> chunks = intCollection.Chunk(n);
+            IEnumerable<IList<int>> chunks = intCollection.ChunkOld(n);
 
             Assert.Equal(n, chunks.Count());
             Assert.Equal(n, chunks.OfType<int[]>().Count());

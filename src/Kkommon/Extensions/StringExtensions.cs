@@ -19,8 +19,8 @@ namespace Kkommon.Extensions.String
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="chunkSize"/> is less than 0.</exception>
         public static string[] Chunk(this string @this, int chunkSize)
         {
-            Preconditions.NotEmpty(@this, nameof(@this));
-            Preconditions.Greater(chunkSize, 1, nameof(chunkSize));
+            Preconditions.NotEmpty(@this);
+            Preconditions.Greater(chunkSize, 1);
 
             int chunkCount = Math.DivRem(@this.Length, chunkSize, out int lastChunkSize);
             string[] chunks = new string[lastChunkSize == 0 ? chunkCount : chunkCount + 1];
